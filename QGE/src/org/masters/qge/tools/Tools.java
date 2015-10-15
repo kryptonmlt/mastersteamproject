@@ -23,8 +23,11 @@ public class Tools {
 		return distance;
 	}
 
-	public static Data generateRandomDatum() {
-		float[] r = { (float) (Math.random() - 0.5f), (float) (Math.random() - 0.5f) };
+	public static Data generateRandomDatum(int cols) {
+		float[] r = new float[cols];
+		for (int i = 0; i < r.length; i++) {
+			r[i] = (float) (Math.random() - 0.5f);
+		}
 		return new Data(r);
 	}
 
@@ -39,13 +42,18 @@ public class Tools {
 	}
 
 	public static Data getAverage(List<Data> dataInTheta) {
-		float[] avg = new float[2];
-		for (Data d : dataInTheta) {
-			avg[0] += d.getRow()[0];
-			avg[1] += d.getRow()[1];
+		if (dataInTheta.isEmpty()) {
+			return null;
 		}
-		avg[0] = avg[0] / dataInTheta.size();
-		avg[1] = avg[1] / dataInTheta.size();
+		float[] avg = new float[dataInTheta.get(0).getRow().length];
+		for (Data d : dataInTheta) {
+			for (int i = 0; i < dataInTheta.get(0).getRow().length; i++) {
+				avg[i] += d.getRow()[i];
+			}
+		}
+		for (int i = 0; i < avg.length; i++) {
+			avg[i] = avg[i] / dataInTheta.size();
+		}
 		return new Data(avg);
 	}
 }
