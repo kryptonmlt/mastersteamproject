@@ -1,6 +1,7 @@
 package test.org.masters.qge.tools;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Assert;
@@ -41,6 +42,19 @@ public class ToolsTest {
 		Assert.assertEquals(0.4f, avg.getRow()[0], 0);
 		Assert.assertEquals(0.4f, avg.getRow()[1], 0);
 	}
+	@Test
+	public void testGetAverageDatumFromQuery_NULL() {
+		float[] p1 = { -0.5f, -0.5f };
+		float[] p2 = { 0.5f, 0.5f };
+		float[] p3 = { 0.3f, 0.3f };
+		float[] query = { 0.1f, 0.1f };
+		List<Data> dataSet = new ArrayList<Data>();
+		dataSet.add(new Data(p1));
+		dataSet.add(new Data(p2));
+		dataSet.add(new Data(p3));
+		Data avg = Tools.getAverageDatumFromQuery(dataSet, new Data(query), 0.1f);
+		Assert.assertNull(avg);
+	}
 
 	@Test
 	public void testGetAverage() {
@@ -57,6 +71,22 @@ public class ToolsTest {
 				(dataInTheta.get(0).getRow()[1] + dataInTheta.get(1).getRow()[1] + dataInTheta.get(2).getRow()[1])
 						/ 3.0f,
 				avg.getRow()[1], 0);
+	}
+
+	@Test
+	public void testGenerateQuerys(){
+		float[] max = {0.5f,0.5f};
+		float[] min = {-0.5f,-0.5f};
+		List<Data> data = Tools.generateQuerys(new Data(max), new Data(min), 0.2f);
+		int n=6;
+		for(int i=0;i< data.size();i++){
+			System.out.print(Arrays.toString(data.get(i).getRow())+ " ");
+			n--;
+			if(n==0){
+				System.out.println();
+				n=6;
+			}
+		}
 	}
 
 }

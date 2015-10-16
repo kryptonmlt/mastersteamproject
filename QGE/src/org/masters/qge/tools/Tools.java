@@ -56,4 +56,30 @@ public class Tools {
 		}
 		return new Data(avg);
 	}
+
+	public static List<Data> generateQuerys(Data max, Data min, float theta) {
+		List<Data> data = null;
+		switch (max.getRow().length) {
+		case 2:
+			data = generateQueryPoints(max.getRow()[0], min.getRow()[0], max.getRow()[1], min.getRow()[1], theta);
+			break;
+		case 3:
+			System.out.println("Not Supported yet...");
+			break;
+		}
+		return data;
+	}
+
+	public static List<Data> generateQueryPoints(float maxX, float minX, float maxY, float minY, float theta) {
+		List<Data> data = new ArrayList<Data>();
+		int intervalsX = (int) ((maxX - minX) / theta) + 1;
+		int intervalsY = (int) ((maxY - minY) / theta) + 1;
+		for (int i = 0; i < intervalsY; i++) {
+			for (int j = 0; j < intervalsX; j++) {
+				float[] point = { minX + (j * theta), minY + (i * theta) };
+				data.add(new Data(point));
+			}
+		}
+		return data;
+	}
 }
