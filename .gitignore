@@ -2,3 +2,4 @@ QGE/bin/.gitignore
 QGE/AVGDATA.txt
 QGE/bin/test/org/masters/qge/QueryGETest.class
 QGE/bin/test/org/masters/qge/tools/ToolsTest.class
+QGE/DIST/AVGDATA.txt
