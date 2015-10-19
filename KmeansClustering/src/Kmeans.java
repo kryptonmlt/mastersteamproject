@@ -9,7 +9,7 @@ public class Kmeans {
 	private LinkedList<double[]> data = new LinkedList<double[]>();
 	private LinkedList<double[]> centroids = new LinkedList<double[]>();
 
-	//the constructor receive two parameters: the path of the .txt file and the number of centroids
+	//the constructor receives two parameters: the path of the .txt file and the number of centroids
 	
 	public Kmeans(String s, int k) {
 
@@ -67,8 +67,8 @@ public class Kmeans {
 				}
 				b.get(maxIndex).add(data.get(i));
 				System.out
-						.println("Il punto" + data.get(i)[0] + ","
-								+ data.get(i)[1] + "è aggiunto al centroide"
+						.println("The point " + data.get(i)[0] + ","
+								+ data.get(i)[1] + " is added to the centroid number "
 								+ maxIndex);
 			}
 
