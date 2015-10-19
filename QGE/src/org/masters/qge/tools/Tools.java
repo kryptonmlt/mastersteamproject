@@ -52,7 +52,7 @@ public class Tools {
 			}
 		}
 		for (int i = 0; i < avg.length; i++) {
-			avg[i] = avg[i] / dataInTheta.size();
+			avg[i] = (float) (Math.round((avg[i] / dataInTheta.size()) * 10000.0) / 10000.0);
 		}
 		return new Data(avg);
 	}

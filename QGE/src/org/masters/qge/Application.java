@@ -15,7 +15,6 @@ import org.masters.qge.storage.Data;
 import org.masters.qge.storage.DataStorage;
 
 import de.erichseifert.gral.data.DataTable;
-import de.erichseifert.gral.navigation.Navigator;
 import de.erichseifert.gral.plots.XYPlot;
 import de.erichseifert.gral.ui.InteractivePanel;
 
@@ -56,11 +55,18 @@ public class Application {
 
 		}
 		if (completed) { // no errors in populating data
-			QueryGE qGE = new QueryGE(0.2f);
+			float theta = 0.0f;
+			try {
+				theta = Float.parseFloat(args[1]);
+			} catch (Exception e) {
+				System.out.println("Theta (2nd parameter) must be in float format example 0.1");
+			}
+			QueryGE qGE = new QueryGE(theta);
 			List<Data> avgData = qGE.generateQueries();
-			if ("true".equals(args[1])) {
-				plot2DData("DATA.txt", avgData, 0);
-				plot2DData("AVGDATA.txt", DataStorage.getInstance().getDataSet(), 1);
+			if (args.length > 2 && "true".equals(args[2])) {
+				plot2DData("DATA.txt", DataStorage.getInstance().getDataSet(), 0);
+				plot2DData("AVGDATA.txt", avgData, 1);
+				System.out.println("Finished plotting..");
 			}
 		}
 	}
@@ -72,7 +78,7 @@ public class Application {
 
 		JFrame frame = new JFrame(title);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setBounds((int) (num * (width / 2)), (int)(height/7), (int) (width / 2), (int) (height/1.5));
+		frame.setBounds((int) (num * (width / 2)), (int) (height / 7), (int) (width / 2), (int) (height / 1.5));
 
 		DataTable data = new DataTable(Float.class, Float.class);
 		for (int i = 0; i < avgData.size(); i++) {

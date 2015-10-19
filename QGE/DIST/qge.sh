@@ -1,1 +1,1 @@
-java -jar QGE.jar sampleData.txt true
+java -jar QGE.jar sampleData.txt 0.2 true
