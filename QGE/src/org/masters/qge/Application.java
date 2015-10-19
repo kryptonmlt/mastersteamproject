@@ -24,7 +24,7 @@ public class Application {
 
 		if (args.length < 2) {
 			throw new IllegalArgumentException(
-					"2 arguments required: 1) path to input data file. 2) true/false whether to display graphs or not");
+					"2 arguments required: 1) path to input data file. 2) theta value in float 3) true/false whether to display graphs or not");
 		}
 
 		File input = new File(args[0]);
