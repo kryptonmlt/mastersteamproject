@@ -6,7 +6,7 @@ import java.util.LinkedList;
 
 public class OfflineKmeans {
 
-	private LinkedList<double[]> data = new LinkedList<double[]>();
+	private ArrayList<double[]> data = new ArrayList<double[]>();
 	private ArrayList<Cluster> Clusters = new ArrayList<Cluster>();
 	
 	// the constructor receives two parameters: the path of the .txt file and
@@ -50,6 +50,7 @@ public class OfflineKmeans {
 			int counter = 0;			
 
 			for (int i = 0; i < data.size(); i++) {
+				System.out.println(i);
 				double max = 0;
 				int maxIndex = -1;
 				for (int j = 0; j < Clusters.size(); j++) {
@@ -64,15 +65,15 @@ public class OfflineKmeans {
 						maxIndex = j;
 					}
 				}
-				Clusters.get(maxIndex).getPoints().add(data.get(i));
-				
+			
+			Clusters.get(maxIndex).getPoints().add(data.get(i));
 				System.out.println("The point " + data.get(i)[0] + ","
 						+ data.get(i)[1] + " is added to the centroid number "
 						+ maxIndex);
 			}
-
+			
 			for (int k = 0; k < Clusters.size(); k++) {
-
+				
 				double sum0 = 0;
 				double sum1 = 0;
 				int div = Clusters.get(k).getPoints().size();
@@ -87,7 +88,7 @@ public class OfflineKmeans {
 
 				double condition1 = Math.abs(Clusters.get(k).getCentroid()[0] - update0);
 				double condition2 = Math.abs(Clusters.get(k).getCentroid()[1] - update1);
-
+				
 				if (condition1 < 0.001 && condition2 < 0.001) {
 					counter++;
 				} else {
