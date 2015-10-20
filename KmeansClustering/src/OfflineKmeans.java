@@ -50,7 +50,7 @@ public class OfflineKmeans {
 			int counter = 0;			
 
 			for (int i = 0; i < data.size(); i++) {
-				System.out.println(i);
+
 				double max = 0;
 				int maxIndex = -1;
 				for (int j = 0; j < Clusters.size(); j++) {

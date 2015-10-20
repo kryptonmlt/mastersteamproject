@@ -3,7 +3,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 public class MainTest {
 
@@ -31,7 +30,7 @@ public class MainTest {
 
 		try {
 			PrintWriter out = new PrintWriter(new BufferedWriter(
-					new FileWriter("clusters.txt")));
+					new FileWriter("clusters.csv")));
 			for (int i = 0; i < partition.size(); i++) {
 				for (int j = 0; j < partition.get(i).getPoints().size(); j++) {
 					out.write(partition.get(i).getPoints().get(j)[0]+","

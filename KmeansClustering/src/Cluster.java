@@ -1,15 +1,15 @@
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 
 public class Cluster {
 	
-	private LinkedList<double[]> points=new LinkedList<double[]>();
+	private ArrayList<double[]> points=new ArrayList<double[]>();
 	private double[] centroid=new double[2];
 	
-	public LinkedList<double[]> getPoints() {
+	public ArrayList<double[]> getPoints() {
 		return points;
 	}
-	public void setPoints(LinkedList<double[]> points) {
+	public void setPoints(ArrayList<double[]> points) {
 		this.points = points;
 	}
 	public double[] getCentroid() {
