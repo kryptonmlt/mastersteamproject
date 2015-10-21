@@ -5,7 +5,7 @@ public class Cluster {
 	
 	private ArrayList<double[]> points=new ArrayList<double[]>();
 	private double[] centroid=new double[2];
-	
+
 	public ArrayList<double[]> getPoints() {
 		return points;
 	}
