@@ -8,7 +8,7 @@ public class MainTest {
 
 	public static void main(String[] args) {
 
-		OfflineKmeans km = new OfflineKmeans("data.txt", 5);
+		OfflineKmeans km = new OfflineKmeans(args[0], Integer.parseInt(args[1]));
 		ArrayList<Cluster> partition=km.update();
 		for (int i = 0; i < partition.size(); i++) {
 			System.out.print(partition.get(i).getCentroid()[0] + ",");
