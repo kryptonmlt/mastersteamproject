@@ -13,16 +13,18 @@ import org.masters.qge.tools.Tools;
 public class QueryGE {
 
 	float theta = 0f;
+	int queryLimit = 0;
 
-	public QueryGE(float theta) {
+	public QueryGE(float theta, int queryLimit) {
 		this.theta = theta;
+		this.queryLimit = queryLimit;
 	}
 
 	public List<Data> generateQueries() {
 
 		float[] max = { Tools.MAX, Tools.MAX };
 		float[] min = { Tools.MIN, Tools.MIN };
-		List<Data> queries = Tools.generateQuerys(new Data(max), new Data(min), theta);
+		List<Data> queries = Tools.generateQuerys(new Data(max), new Data(min), theta, queryLimit);
 
 		List<Data> avgs = new ArrayList<Data>();
 		for (Data query : queries) {
