@@ -9,11 +9,7 @@ public class MainTest {
 	public static void main(String[] args) {
 
 		OfflineKmeans km = new OfflineKmeans(args[0], Integer.parseInt(args[1]));
-<<<<<<< HEAD
 		ArrayList<Cluster> partition = km.update();
-=======
-		ArrayList<Cluster> partition=km.update();
->>>>>>> 514554682d8fb3bfb13f854e00f4ba880aff151e
 		for (int i = 0; i < partition.size(); i++) {
 			System.out.print(partition.get(i).getCentroid()[0] + ",");
 			System.out.print(partition.get(i).getCentroid()[1] + "\n");
