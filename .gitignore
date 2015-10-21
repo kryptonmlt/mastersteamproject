@@ -4,3 +4,4 @@ QGE/bin/test/org/masters/qge/QueryGETest.class
 QGE/bin/test/org/masters/qge/tools/ToolsTest.class
 QGE/DIST/AVGDATA.txt
 *.class
+*.csv
