@@ -24,8 +24,10 @@ public class QueryGE {
 
 		float[] max = { Tools.MAX, Tools.MAX };
 		float[] min = { Tools.MIN, Tools.MIN };
+		System.out.println("Generating queries..");
 		List<Data> queries = Tools.generateQuerys(new Data(max), new Data(min), theta, queryLimit);
 
+		System.out.println("Generating Average points from queries");
 		List<Data> avgs = new ArrayList<Data>();
 		for (Data query : queries) {
 			Data d = Tools.getAverageDatumFromQuery(DataStorage.getInstance().getDataSet(), query, theta);
@@ -33,6 +35,7 @@ public class QueryGE {
 				avgs.add(d);
 			}
 		}
+		System.out.println("Writing to AVGDATA.txt");
 		BufferedWriter bw = null;
 		try {
 			bw = new BufferedWriter(new FileWriter("AVGDATA.txt"));
@@ -62,6 +65,7 @@ public class QueryGE {
 				}
 			}
 		}
+		System.out.println("Finished writing to AVGDATA.txt");
 		return avgs;
 	}
 }

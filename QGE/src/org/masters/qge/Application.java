@@ -33,13 +33,17 @@ public class Application {
 		}
 		// read file and populate Data Store
 		BufferedReader br = new BufferedReader(new FileReader(input));
-		String temp = br.readLine();
+		String temp = null;
 
-		DataStorage.getInstance().setColumns(temp.split(","));
 		boolean completed = false;
 		try {
+			boolean first = true;
 			while ((temp = br.readLine()) != null) {
 				String[] d = temp.split(",");
+				if (first) {
+					DataStorage.getInstance().setColumns(d);
+					first = false;
+				}
 				if (d.length != DataStorage.getInstance().getColumns().length) {
 					throw new IllegalArgumentException("Number of columns doesnt match data in input file..." + temp);
 				}
