@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 import javax.swing.JFrame;
 
@@ -27,19 +28,14 @@ import de.erichseifert.gral.util.Insets2D;
 
 public class Application {
 
-	private static Color[] colors = new Color[10];
+	private static Color[] colors = new Color[256];
 
 	public static void main(String args[]) throws IOException {
-		colors[0] = Color.RED;
-		colors[1] = Color.BLUE;
-		colors[2] = Color.GREEN;
-		colors[3] = Color.CYAN;
-		colors[4] = Color.GRAY;
-		colors[5] = Color.MAGENTA;
-		colors[6] = Color.ORANGE;
-		colors[7] = Color.PINK;
-		colors[8] = Color.YELLOW;
-		colors[9] = Color.BLACK;
+
+		Random rand = new Random();
+		for (int i = 0; i < colors.length; i++) {
+			colors[i] = new Color(rand.nextFloat(), rand.nextFloat(), rand.nextFloat());
+		}
 
 		File dataFileInput = new File(args[0]);
 		if (!dataFileInput.exists()) {
@@ -122,7 +118,7 @@ public class Application {
 		for (int i = 0; i < dataSeries.length; i++) {
 			PointRenderer points = new DefaultPointRenderer2D();
 			points.setShape(new Rectangle2D.Double(-2.5, -2.5, 5, 5));
-			points.setColor(colors[i%10]);
+			points.setColor(colors[i % colors.length]);
 			plot.setPointRenderer(dataSeries[i], points);
 		}
 
