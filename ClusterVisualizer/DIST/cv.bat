@@ -1,0 +1,1 @@
+java -jar ClusterVisualizer.jar sampleData.txt centroids.txt pointsclusters.txt
