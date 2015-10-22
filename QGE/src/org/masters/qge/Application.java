@@ -22,9 +22,9 @@ public class Application {
 
 	public static void main(String args[]) throws IOException {
 
-		if (args.length < 2) {
+		if (args.length < 3) {
 			throw new IllegalArgumentException(
-					"2 arguments required: 1) path to input data file. 2) theta value in float 3) true/false whether to display graphs or not");
+					"2 arguments required: 1) path to input data file. 2) theta value in float 3) integer representing query limit 4) true/false whether to display graphs or not");
 		}
 
 		File input = new File(args[0]);
@@ -33,13 +33,17 @@ public class Application {
 		}
 		// read file and populate Data Store
 		BufferedReader br = new BufferedReader(new FileReader(input));
-		String temp = br.readLine();
+		String temp = null;
 
-		DataStorage.getInstance().setColumns(temp.split(","));
 		boolean completed = false;
 		try {
+			boolean first = true;
 			while ((temp = br.readLine()) != null) {
 				String[] d = temp.split(",");
+				if (first) {
+					DataStorage.getInstance().setColumns(d);
+					first = false;
+				}
 				if (d.length != DataStorage.getInstance().getColumns().length) {
 					throw new IllegalArgumentException("Number of columns doesnt match data in input file..." + temp);
 				}
@@ -56,14 +60,16 @@ public class Application {
 		}
 		if (completed) { // no errors in populating data
 			float theta = 0.0f;
+			int queryLimit = 0;
 			try {
 				theta = Float.parseFloat(args[1]);
+				queryLimit = Integer.parseInt(args[2]);
 			} catch (Exception e) {
 				System.out.println("Theta (2nd parameter) must be in float format example 0.1");
 			}
-			QueryGE qGE = new QueryGE(theta);
+			QueryGE qGE = new QueryGE(theta, queryLimit);
 			List<Data> avgData = qGE.generateQueries();
-			if (args.length > 2 && "true".equals(args[2])) {
+			if (args.length > 3 && "true".equals(args[3])) {
 				plot2DData("DATA.txt", DataStorage.getInstance().getDataSet(), 0);
 				plot2DData("AVGDATA.txt", avgData, 1);
 				System.out.println("Finished plotting..");
