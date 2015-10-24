@@ -45,7 +45,7 @@ public class ExportArff {
 		    	dou[0] = a1.doubleValue();
 		    	dou[1] = b1.doubleValue();
 		    	System.out.println(dou[0]+","+dou[1]+"\r");
-		    	WriteFile.writeFile("DATA.txt",dou);
+		    	WriteFile.writeFile("DATAa.txt",dou);
 		    }
 		    System.out.println(newData.toSummaryString()); 
 		    
