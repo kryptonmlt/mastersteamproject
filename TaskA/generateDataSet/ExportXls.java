@@ -2,9 +2,13 @@ package generateDataSet;
 
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 
+import org.apache.poi.EncryptedDocumentException;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell; 
 import org.apache.poi.ss.usermodel.Row; 
 import org.apache.poi.ss.usermodel.Sheet; 
@@ -15,13 +19,36 @@ public class ExportXls {
 
     //use POI.jar to read excel file
     public void exportXls() throws Exception { 
+    	writeSheet(1);
+    	writeSheet(2);
+    }
+    
+    public void writeSheet(int i){
         //create input stream
-        InputStream inp = new FileInputStream("Data_User_Modeling_Dataset_Hamdi Tolga KAHRAMAN.xls"); 
+        InputStream inp = null;
+		try {
+			inp = new FileInputStream("Data_User_Modeling_Dataset_Hamdi Tolga KAHRAMAN.xls");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
          
         //create workbook object
-        Workbook wb = WorkbookFactory.create(inp); 
+        Workbook wb = null;
+		try {
+			wb = WorkbookFactory.create(inp);
+		} catch (EncryptedDocumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvalidFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
         //get Training_Data sheet 
-        Sheet sheet = wb.getSheetAt(1); 
+        Sheet sheet = wb.getSheetAt(i); 
         Cell cellSTG = null;
         Cell cellPEG = null;
         int ignoreRows = 1;
@@ -43,8 +70,13 @@ public class ExportXls {
 	    	dou[0] = a1.doubleValue();
 	    	dou[1] = b1.doubleValue();
 	    	System.out.println(dou[0]+","+dou[1]+"\r");
-	    	WriteFile.writeFile("DATA.txt",dou);
+	    	WriteFile.writeFile("DATAb.txt",dou);
         } 
-        inp.close(); 
-    } 
+        try {
+			inp.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+    }
 }
