@@ -76,7 +76,7 @@ public class OfflineKmeans {
 			}
 
 			for (int k = 0; k < Clusters.size(); k++) {
-
+				
 				double sum0 = 0;
 				double sum1 = 0;
 				int div = Clusters.get(k).getPoints().size();
@@ -94,7 +94,7 @@ public class OfflineKmeans {
 				double condition2 = Math.abs(Clusters.get(k).getCentroid()[1]
 						- update1);
 
-				if (condition1 < 0.001 && condition2 < 0.001) {
+				if (condition1 <= 0.001 && condition2 <= 0.001) {
 					counter++;
 				} else {
 					Clusters.get(k).getCentroid()[0] = update0;
@@ -102,10 +102,8 @@ public class OfflineKmeans {
 				}
 			}
 
-			if (counter == Clusters.size()) {
-
+			if (counter == Clusters.size()-1) {
 				return Clusters;
-
 			}
 
 			for (int i = 0; i < Clusters.size(); i++) {
