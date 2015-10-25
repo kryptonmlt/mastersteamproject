@@ -70,9 +70,9 @@ public class OfflineKmeans {
 				}
 				pointsclusters.set(i, maxIndex+1);
 				Clusters.get(maxIndex).getPoints().add(data.get(i));
-				System.out.println("The point " + data.get(i)[0] + ","
-						+ data.get(i)[1] + " is added to the centroid number "
-						+ maxIndex);
+//				System.out.println("The point " + data.get(i)[0] + ","
+//						+ data.get(i)[1] + " is added to the centroid number "
+//						+ maxIndex);
 			}
 
 			for (int k = 0; k < Clusters.size(); k++) {

@@ -10,10 +10,10 @@ public class MainTest {
 
 		OfflineKmeans km = new OfflineKmeans(args[0], Integer.parseInt(args[1]));
 		ArrayList<Cluster> partition = km.update();
-		for (int i = 0; i < partition.size(); i++) {
-			System.out.print(partition.get(i).getCentroid()[0] + ",");
-			System.out.print(partition.get(i).getCentroid()[1] + "\n");
-		}
+//		for (int i = 0; i < partition.size(); i++) {
+//			System.out.print(partition.get(i).getCentroid()[0] + ",");
+//			System.out.print(partition.get(i).getCentroid()[1] + "\n");
+//		}
 
 		try {
 			PrintWriter out = new PrintWriter(new BufferedWriter(
