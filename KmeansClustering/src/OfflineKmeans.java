@@ -77,32 +77,35 @@ public class OfflineKmeans {
 
 			for (int k = 0; k < Clusters.size(); k++) {
 				
-				double sum0 = 0;
-				double sum1 = 0;
-				int div = Clusters.get(k).getPoints().size();
+				double c_x = 0;
+				double c_y = 0;
+				int points = Clusters.get(k).getPoints().size();
 
-				for (int i = 0; i < Clusters.get(k).getPoints().size(); i++) {
-					sum0 += Clusters.get(k).getPoints().get(i)[0];
-					sum1 += Clusters.get(k).getPoints().get(i)[1];
+				for (int i = 0; i < points; i++) {
+					c_x += Clusters.get(k).getPoints().get(i)[0];
+					c_y += Clusters.get(k).getPoints().get(i)[1];
 				}
 
-				double update0 = sum0 / div;
-				double update1 = sum1 / div;
+				if (points > 0) {
+				    c_x /= points;
+				    c_y /= points;
+				}
+				    
 
 				double condition1 = Math.abs(Clusters.get(k).getCentroid()[0]
-						- update0);
+						- c_x);
 				double condition2 = Math.abs(Clusters.get(k).getCentroid()[1]
-						- update1);
+						- c_y);
 
 				if (condition1 <= 0.001 && condition2 <= 0.001) {
 					counter++;
 				} else {
-					Clusters.get(k).getCentroid()[0] = update0;
-					Clusters.get(k).getCentroid()[1] = update1;
+					Clusters.get(k).getCentroid()[0] = c_x;
+					Clusters.get(k).getCentroid()[1] = c_y;
 				}
 			}
 
-			if (counter == Clusters.size()-1) {
+			if (counter == Clusters.size()) {
 				return Clusters;
 			}
 
