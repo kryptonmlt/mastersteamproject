@@ -1,1 +1,1 @@
-java -jar ClusterVisualizer.jar AVGData/a/0.01/AVGDATA_100000.txt AVGData\a_0.01_100000\pointsclusters_20_0.05.txt
+java -jar ClusterVisualizer.jar AVGData/AVGDATAb/0.01/AVGDATA_1000.txt AVGData\b_0.01_1000\pointsclusters_50_0.05.txt
