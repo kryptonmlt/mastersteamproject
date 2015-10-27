@@ -14,18 +14,18 @@ public class QueryGE {
 
 	float theta = 0f;
 	int queryLimit = 0;
+	int noOfAxis = 0;
 
-	public QueryGE(float theta, int queryLimit) {
+	public QueryGE(float theta, int queryLimit, int noOfAxis) {
 		this.theta = theta;
 		this.queryLimit = queryLimit;
+		this.noOfAxis = noOfAxis;
 	}
 
 	public List<Data> generateQueries() {
 
-		float[] max = { Tools.MAX, Tools.MAX };
-		float[] min = { Tools.MIN, Tools.MIN };
 		System.out.println("Generating queries..");
-		List<Data> queries = Tools.generateQuerys(new Data(max), new Data(min), theta, queryLimit);
+		List<Data> queries = Tools.generateQuerys(queryLimit, noOfAxis);
 
 		System.out.println("Generating Average points from queries");
 		List<Data> avgs = new ArrayList<Data>();
@@ -38,7 +38,7 @@ public class QueryGE {
 		System.out.println("Writing to AVGDATA.txt");
 		BufferedWriter bw = null;
 		try {
-			bw = new BufferedWriter(new FileWriter("AVGDATA_"+theta+"_"+queryLimit+".txt"));
+			bw = new BufferedWriter(new FileWriter("AVGDATA_" + theta + "_" + queryLimit + ".txt"));
 			for (Data avgD : avgs) {
 				StringBuilder builder = new StringBuilder();
 				for (int i = 0; i < avgD.getRow().length; i++) {

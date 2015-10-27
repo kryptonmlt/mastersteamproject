@@ -19,16 +19,6 @@ public class ToolsTest {
 	}
 
 	@Test
-	public void testGenerateRandomDatum() {
-		Data d1 = Tools.generateRandomDatum(2);
-		Data d2 = Tools.generateRandomDatum(2);
-		Assert.assertNotNull(d1);
-		Assert.assertNotNull(d2);
-		Assert.assertNotEquals(d1.getRow()[0], d2.getRow()[0]);
-		Assert.assertNotEquals(d1.getRow()[1], d2.getRow()[1]);
-	}
-
-	@Test
 	public void testGetAverageDatumFromQuery() {
 		float[] p1 = { -0.5f, -0.5f };
 		float[] p2 = { 0.5f, 0.5f };
@@ -59,10 +49,7 @@ public class ToolsTest {
 
 	@Test
 	public void testGetAverage() {
-		List<Data> dataInTheta = new ArrayList<Data>();
-		dataInTheta.add(Tools.generateRandomDatum(2));
-		dataInTheta.add(Tools.generateRandomDatum(2));
-		dataInTheta.add(Tools.generateRandomDatum(2));
+		List<Data> dataInTheta = Tools.generateQuerys(3, 2);
 		Data avg = Tools.getAverage(dataInTheta);
 		Assert.assertEquals(
 				(dataInTheta.get(0).getRow()[0] + dataInTheta.get(1).getRow()[0] + dataInTheta.get(2).getRow()[0])
@@ -76,9 +63,7 @@ public class ToolsTest {
 
 	@Test
 	public void testGenerateQuerys() {
-		float[] max = { 0.5f, 0.5f };
-		float[] min = { -0.5f, -0.5f };
-		List<Data> data = Tools.generateQuerys(new Data(max), new Data(min), 0.2f, 10);
+		List<Data> data = Tools.generateQuerys(10, 2);
 		int n = 5;
 		for (int i = 0; i < data.size(); i++) {
 			System.out.print(Arrays.toString(data.get(i).getRow()) + " ");

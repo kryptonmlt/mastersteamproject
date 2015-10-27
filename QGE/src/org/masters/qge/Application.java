@@ -24,7 +24,7 @@ public class Application {
 
 		if (args.length < 3) {
 			throw new IllegalArgumentException(
-					"2 arguments required: 1) path to input data file. 2) theta value in float 3) integer representing query limit 4) true/false whether to display graphs or not");
+					"2 arguments required: 1) path to input data file. 2) theta value in float 3) integer representing query limit 4) true if graph plotting is required");
 		}
 
 		File input = new File(args[0]);
@@ -61,13 +61,14 @@ public class Application {
 		if (completed) { // no errors in populating data
 			float theta = 0.0f;
 			int queryLimit = 0;
+			int noOfAxis = DataStorage.getInstance().getDataSet().get(0).getRow().length;
 			try {
 				theta = Float.parseFloat(args[1]);
 				queryLimit = Integer.parseInt(args[2]);
 			} catch (Exception e) {
 				System.out.println("Theta (2nd parameter) must be in float format example 0.1");
 			}
-			QueryGE qGE = new QueryGE(theta, queryLimit);
+			QueryGE qGE = new QueryGE(theta, queryLimit, noOfAxis);
 			List<Data> avgData = qGE.generateQueries();
 			if (args.length > 3 && "true".equals(args[3])) {
 				plot2DData("DATA.txt", DataStorage.getInstance().getDataSet(), 0);

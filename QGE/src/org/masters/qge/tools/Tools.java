@@ -2,14 +2,11 @@ package org.masters.qge.tools;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.masters.qge.storage.Data;
 
 public class Tools {
-
-	public static float MAX = 0.5f;
-
-	public static float MIN = -0.5f;
 
 	private Tools() {
 
@@ -21,14 +18,6 @@ public class Tools {
 		float xdist = p1.getRow()[0] - p2.getRow()[0];
 		float distance = (float) Math.sqrt((ydist * ydist) + (xdist * xdist));
 		return distance;
-	}
-
-	public static Data generateRandomDatum(int cols) {
-		float[] r = new float[cols];
-		for (int i = 0; i < r.length; i++) {
-			r[i] = (float) (Math.random() - 0.5f);
-		}
-		return new Data(r);
 	}
 
 	public static Data getAverageDatumFromQuery(List<Data> dataSet, Data query, float theta) {
@@ -57,32 +46,26 @@ public class Tools {
 		return new Data(avg);
 	}
 
-	public static List<Data> generateQuerys(Data max, Data min, float theta, int queryLimit) {
-		List<Data> data = null;
-		switch (max.getRow().length) {
-		case 2:
-			data = generateQueryPoints(max.getRow()[0], min.getRow()[0], max.getRow()[1], min.getRow()[1], theta,
-					queryLimit);
-			break;
-		case 3:
-			System.out.println("Not Supported yet...");
-			break;
+	public static List<Data> generateQuerys(int queryLimit, int noOfAxis) {
+		List<Data> data = new ArrayList<Data>();
+		Random r = new Random();
+		for (int i = 0; i < queryLimit; i++) {
+			float[] row = new float[noOfAxis];
+			for (int j = 0; j < noOfAxis; j++) {
+				row[j] = r.nextFloat() - 0.5f;
+			}
+			data.add(new Data(row));
 		}
 		return data;
 	}
 
-	public static List<Data> generateQueryPoints(float maxX, float minX, float maxY, float minY, float theta,
-			int queryLimit) {
+	public static List<Data> generateEquallyDistributed2DQueryPoints(float maxX, float minX, float maxY, float minY,
+			float theta, int queryLimit) {
 		List<Data> data = new ArrayList<Data>();
 		int[] queryL = getQueryLimitsXY(queryLimit);
 		float intervalsX = (maxX - minX) / (queryL[0] - 1);
 		float intervalsY = (maxY - minY) / (queryL[1] - 1);
-		/*
-		 * int intervalsX = (int) ((maxX - minX) / theta) + 1; int intervalsY =
-		 * (int) ((maxY - minY) / theta) + 1; for (int i = 0; i < intervalsY;
-		 * i++) { for (int j = 0; j < intervalsX; j++) { float[] point = { minX
-		 * + (j * theta), minY + (i * theta) }; data.add(new Data(point)); } }
-		 */
+
 		for (int i = 0; i < queryL[1]; i++) {
 			for (int j = 0; j < queryL[0]; j++) {
 				float[] point = { minX + (j * intervalsX), minY + (i * intervalsY) };
