@@ -38,7 +38,7 @@ public class QueryGE {
 		System.out.println("Writing to AVGDATA.txt");
 		BufferedWriter bw = null;
 		try {
-			bw = new BufferedWriter(new FileWriter("AVGDATA.txt"));
+			bw = new BufferedWriter(new FileWriter("AVGDATA_"+theta+"_"+queryLimit+".txt"));
 			for (Data avgD : avgs) {
 				StringBuilder builder = new StringBuilder();
 				for (int i = 0; i < avgD.getRow().length; i++) {
