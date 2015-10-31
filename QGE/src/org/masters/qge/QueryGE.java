@@ -29,11 +29,16 @@ public class QueryGE {
 
 		System.out.println("Generating Average points from queries");
 		List<Data> avgs = new ArrayList<Data>();
+		int c = 0;
 		for (Data query : queries) {
+			if (((c / (float) queries.size()) * 100) % 10 == 0) {
+				System.out.println("query completion: " + ((c / (float) queries.size()) * 100f) + "%");
+			}
 			Data d = Tools.getAverageDatumFromQuery(DataStorage.getInstance().getDataSet(), query, theta);
 			if (d != null) {
 				avgs.add(d);
 			}
+			c++;
 		}
 		System.out.println("Writing to AVGDATA.txt");
 		BufferedWriter bw = null;
