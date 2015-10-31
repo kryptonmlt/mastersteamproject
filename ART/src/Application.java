@@ -43,6 +43,21 @@ public class Application {
 		}
 		bw.flush();
 		bw.close();
+		BufferedWriter bw3 = new BufferedWriter(
+				new FileWriter(new File("centroids_" + distance + "_" + alpha + ".txt")));
+		System.out.println("Writing centroids.txt ...");
+		for (float[] cluster : art.getCentroids()) {
+			for (int i = 0; i < cluster.length; i++) {
+				if (i < cluster.length - 1) {
+					bw3.write(cluster[i] + ", ");
+				} else {
+					bw3.write(cluster[i] + "");
+				}
+			}
+			bw3.write("\n");
+		}
+		System.out.println("Finished!");
+		bw3.close();
 		System.out.println("Finished Successfully...");
 	}
 }
