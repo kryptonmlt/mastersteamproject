@@ -4,7 +4,6 @@ import java.util.List;
 
 public class ART {
 
-	// private List<Long> counts;
 	private List<float[]> centroids;
 	private float theta;
 	private float alpha = 0.1f;
@@ -26,10 +25,6 @@ public class ART {
 			nearestCentroid = 0;
 		} else {
 			if (Tools.distance(point, centroids.get(nearestCentroid)) < theta) {
-				// Increment count
-				// this.counts.set(nearestCentroid,
-				// this.counts.get(nearestCentroid) + 1);
-
 				// Move centroid
 				this.centroids.set(nearestCentroid, moveCentroid(point, nearestCentroid));
 
