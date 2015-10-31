@@ -1,11 +1,21 @@
 package test.org.masters.online.kmeans;
 
+import java.util.Random;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.masters.online.kmeans.OnlineKmeans;
 import org.masters.online.kmeans.utils.Tools;
 
 public class OnlineKmeansTest {
+	@Test
+	public void testDistance() {
+		Random r = new Random();
+		float[] p1 = { r.nextFloat() * r.nextInt(20), r.nextFloat() * r.nextInt(3) };
+		float[] p2 = { r.nextFloat() * r.nextInt(100), r.nextFloat() * r.nextInt(50) };
+		Assert.assertEquals(Tools.distance(p1, p2), Tools.distance2D(p1, p2), 0);
+		Assert.assertEquals(Tools.distance(p1, p2), Tools.distance2D(p2, p1), 0);
+	}
 
 	@Test
 	public void testMoveCentroid() {
