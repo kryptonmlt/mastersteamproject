@@ -46,6 +46,12 @@ public class Application {
 		if (!pointsFileInput.exists()) {
 			throw new IllegalArgumentException("Points File does not exist");
 		}
+		int x = 0;
+		int y = 1;
+		if (args.length > 3) {
+			x = Integer.parseInt(args[2]);
+			y = Integer.parseInt(args[3]);
+		}
 
 		// read file and populate Data Store
 		BufferedReader br = new BufferedReader(new FileReader(dataFileInput));
@@ -77,10 +83,10 @@ public class Application {
 			br.close();
 
 		}
-		plot2DData("KMeans Clusters", data);
+		plot2DData("KMeans Clusters", data, x, y);
 	}
 
-	public static void plot2DData(String title, List<ClusterData> avgData) {
+	public static void plot2DData(String title, List<ClusterData> avgData, int x, int y) {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		double width = screenSize.getWidth();
 		double height = screenSize.getHeight();
@@ -94,14 +100,14 @@ public class Application {
 			coloredData.get(aD.getClusterId()).add(aD.getPoint());
 		}
 		DataSource[] dataSeries = new DataSource[coloredData.keySet().size()];
-		int x = 0;
+		int z = 0;
 		for (Integer id : coloredData.keySet()) {
 			DataTable data = new DataTable(Float.class, Float.class);
 			for (int i = 0; i < coloredData.get(id).size(); i++) {
-				data.add(coloredData.get(id).get(i)[0], coloredData.get(id).get(i)[1]);
+				data.add(coloredData.get(id).get(i)[x], coloredData.get(id).get(i)[y]);
 			}
-			dataSeries[x] = new DataSeries("Data Series", data, 0, 1);
-			x++;
+			dataSeries[z] = new DataSeries("Data Series", data, 0, 1);
+			z++;
 		}
 
 		XYPlot plot = new XYPlot(dataSeries);
