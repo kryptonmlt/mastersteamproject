@@ -5,11 +5,11 @@ import java.util.List;
 public class ART {
 
 	private List<float[]> centroids;
-	private float theta;
+	private float row;
 	private float alpha = 0.1f;
 
-	public ART(float theta, float alpha) {
-		this.theta = theta;
+	public ART(float row, float alpha) {
+		this.row = row;
 		this.alpha = alpha;
 		centroids = new ArrayList<float[]>();
 	}
@@ -24,7 +24,7 @@ public class ART {
 			centroids.add(point);
 			nearestCentroid = 0;
 		} else {
-			if (Tools.distance(point, centroids.get(nearestCentroid)) < theta) {
+			if (Tools.distance(point, centroids.get(nearestCentroid)) < row) {
 				// Move centroid
 				this.centroids.set(nearestCentroid, moveCentroid(point, nearestCentroid));
 
