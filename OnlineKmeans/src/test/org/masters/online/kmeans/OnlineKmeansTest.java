@@ -1,5 +1,7 @@
 package test.org.masters.online.kmeans;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import org.junit.Assert;
@@ -30,14 +32,14 @@ public class OnlineKmeansTest {
 
 	@Test
 	public void testClassify() {
-		float[][] c = new float[3][2];
+		List<float[]> c = new ArrayList<float[]>();
 		float[] c1 = { 20.0f, 5.0f };
 		float[] c2 = { 10.0f, 5.0f };
 		float[] c3 = { 230.0f, 52.0f };
+		c.add(c1);
+		c.add(c2);
+		c.add(c3);
 		float[] point = { 14.5f, 5.0f };
-		c[0] = c1;
-		c[2] = c2;
-		c[3] = c3;
 		Assert.assertEquals(1, Tools.classify(point, c));
 
 	}

@@ -1,0 +1,1 @@
+java -jar OnlineKMeans.jar AVGDATA_0.01_50000.txt 50 0.05
