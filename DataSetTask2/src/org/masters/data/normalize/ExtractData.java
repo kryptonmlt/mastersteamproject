@@ -1,4 +1,4 @@
-package generateDataSet;
+package org.masters.data.normalize;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -22,13 +22,21 @@ public class ExtractData {
 		for (int i = 0; i < numberOfDataPoints; i++) {
 			data.add(new ArrayList<Float>());
 		}
+
+		int maxPoints = Integer.MAX_VALUE;
+		int count = 0;
+		if (args.length > 2) {
+			maxPoints = Integer.parseInt(args[3]);
+		}
+
 		System.out.println("Reading data file..");
-		while ((temp = br.readLine()) != null) {
+		while ((temp = br.readLine()) != null && count < maxPoints) {
 			temp = temp.replaceAll("\\s+", " ");
 			String[] input = temp.split(" ");
 			for (int i = startDataPoints, j = 0; i < endDataPoints; i++, j++) {
 				data.get(j).add(Float.parseFloat(input[i]));
 			}
+			count++;
 		}
 		br.close();
 		System.out.println("Calculating max and min..");
