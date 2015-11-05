@@ -15,16 +15,19 @@ public class ExtractData {
 		BufferedReader br = new BufferedReader(new FileReader(new File(args[0])));
 		String temp = br.readLine();
 		List<ArrayList<Float>> data = new ArrayList<ArrayList<Float>>();
-		int dataPoints = Integer.parseInt(args[1]);
-		for (int i = 0; i < dataPoints; i++) {
+
+		int startDataPoints = Integer.parseInt(args[1]);
+		int endDataPoints = Integer.parseInt(args[2]);
+		int numberOfDataPoints = endDataPoints - startDataPoints;
+		for (int i = 0; i < numberOfDataPoints; i++) {
 			data.add(new ArrayList<Float>());
 		}
 		System.out.println("Reading data file..");
 		while ((temp = br.readLine()) != null) {
 			temp = temp.replaceAll("\\s+", " ");
 			String[] input = temp.split(" ");
-			for (int i = 0; i < dataPoints; i++) {
-				data.get(i).add(Float.parseFloat(input[i]));
+			for (int i = startDataPoints, j = 0; i < endDataPoints; i++, j++) {
+				data.get(j).add(Float.parseFloat(input[i]));
 			}
 		}
 		br.close();
