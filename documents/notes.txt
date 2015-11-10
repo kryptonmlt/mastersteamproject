@@ -1,0 +1,5 @@
+Silhouette task1: increase vigilance - see what happens
+Task2: Do K means on queries instead of data
+Gaussian distribution
+query sub spaces might be of different importance
+L is different than K
