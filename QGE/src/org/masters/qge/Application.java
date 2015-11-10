@@ -69,7 +69,9 @@ public class Application {
 				System.out.println("Theta (2nd parameter) must be in float format example 0.1");
 			}
 			QueryGE qGE = new QueryGE(theta, queryLimit, noOfAxis);
-			List<Data> avgData = qGE.generateQueries();
+			qGE.generateQueries();
+			qGE.saveQueries();
+			List<Data> avgData = qGE.generateAVGPoints(qGE.getQueries());
 			if (args.length > 3 && "true".equals(args[3])) {
 				plot2DData("DATA.txt", DataStorage.getInstance().getDataSet(), 0);
 				plot2DData("AVGDATA.txt", avgData, 1);

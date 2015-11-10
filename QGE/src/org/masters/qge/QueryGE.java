@@ -12,21 +12,25 @@ import org.masters.qge.tools.Tools;
 
 public class QueryGE {
 
-	float theta = 0f;
-	int queryLimit = 0;
-	int noOfAxis = 0;
+	private float theta = 0f;
+	private int queryLimit = 0;
+	private int noOfAxis = 0;
+	private List<Data> queries = null;
 
 	public QueryGE(float theta, int queryLimit, int noOfAxis) {
 		this.theta = theta;
 		this.queryLimit = queryLimit;
 		this.noOfAxis = noOfAxis;
+		queries = new ArrayList<Data>();
 	}
 
-	public List<Data> generateQueries() {
-
+	public void generateQueries() {
 		System.out.println("Generating queries..");
-		List<Data> queries = Tools.generateQuerys(queryLimit, noOfAxis);
+		setQueries(Tools.generateQuerys(queryLimit, noOfAxis));
+		System.out.println("Generated queries..");
+	}
 
+	public List<Data> generateAVGPoints(List<Data> queries) {
 		System.out.println("Generating Average points from queries");
 		List<Data> avgs = new ArrayList<Data>();
 		int c = 0;
@@ -72,5 +76,46 @@ public class QueryGE {
 		}
 		System.out.println("Finished writing to AVGDATA.txt");
 		return avgs;
+	}
+
+	public List<Data> getQueries() {
+		return queries;
+	}
+
+	public void setQueries(List<Data> queries) {
+		this.queries = queries;
+	}
+
+	public void saveQueries() {
+		System.out.println("Writing to queries.txt");
+		BufferedWriter bw = null;
+		try {
+			bw = new BufferedWriter(new FileWriter("queries_" + theta + "_" + queryLimit + ".txt"));
+			for (Data q : queries) {
+				StringBuilder builder = new StringBuilder();
+				for (int i = 0; i < q.getRow().length; i++) {
+					builder.append(q.getRow()[i]);
+					builder.append(",");
+				}
+				builder.append(theta);
+				builder.append("\n");
+				bw.write(builder.toString());
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				bw.flush();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					bw.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		System.out.println("Finished writing to queries.txt");
 	}
 }
