@@ -46,10 +46,11 @@ public class Tools {
 		return new Data(avg);
 	}
 
-	public static List<Data> generateQuerys(int queryLimit, int noOfAxis, float[] distributions) {
+	public static List<Data> generateQuerys(int queryLimit, int noOfAxis, List<float[]> lPoints) {
 		List<Data> data = new ArrayList<Data>();
-		if (distributions == null) {//generate totally random queries since no distributions specified.f
-			Random r = new Random();
+		Random r = new Random();
+		if (lPoints.isEmpty()) {// generate totally random queries since no
+								// distributions specified.f
 			for (int i = 0; i < queryLimit; i++) {
 				float[] row = new float[noOfAxis];
 				for (int j = 0; j < noOfAxis; j++) {
@@ -58,9 +59,36 @@ public class Tools {
 				data.add(new Data(row));
 			}
 		} else {
-
+			int lQueries = queryLimit / lPoints.size();
+			for (int i = 0; i < lPoints.size(); i++) {// query each box
+				for (int j = 0; j < lQueries; j++) {
+					data.add(getRandomPointInBox(lPoints.get(i), r));
+				}
+			}
 		}
 		return data;
+	}
+
+	private static Data getRandomPointInBox(float[] input, Random r) {
+		float[] points = new float[input.length - 1];
+		float width = input[input.length - 1];
+		for (int i = 0; i < input.length - 1; i++) {
+			points[i] = input[i];
+		}
+
+		float[] result = new float[points.length];
+		for (int i = 0; i < result.length; i++) {
+			float g = 0.0f;
+			boolean found = false;
+			while (!found) {
+				g = (float) ((r.nextGaussian() * (width / 3)) + points[i]);
+				if (g < (points[i] + width) && g > (points[i] - width)) {
+					found = true;
+				}
+			}
+			result[i] = g;
+		}
+		return new Data(result);
 	}
 
 	public static List<Data> generateEquallyDistributed2DQueryPoints(float maxX, float minX, float maxY, float minY,
