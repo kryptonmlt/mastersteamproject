@@ -46,15 +46,19 @@ public class Tools {
 		return new Data(avg);
 	}
 
-	public static List<Data> generateQuerys(int queryLimit, int noOfAxis) {
+	public static List<Data> generateQuerys(int queryLimit, int noOfAxis, float[] distributions) {
 		List<Data> data = new ArrayList<Data>();
-		Random r = new Random();
-		for (int i = 0; i < queryLimit; i++) {
-			float[] row = new float[noOfAxis];
-			for (int j = 0; j < noOfAxis; j++) {
-				row[j] = r.nextFloat() - 0.5f;
+		if (distributions == null) {//generate totally random queries since no distributions specified.f
+			Random r = new Random();
+			for (int i = 0; i < queryLimit; i++) {
+				float[] row = new float[noOfAxis];
+				for (int j = 0; j < noOfAxis; j++) {
+					row[j] = r.nextFloat() - 0.5f;
+				}
+				data.add(new Data(row));
 			}
-			data.add(new Data(row));
+		} else {
+
 		}
 		return data;
 	}

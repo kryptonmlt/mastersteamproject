@@ -24,9 +24,9 @@ public class QueryGE {
 		queries = new ArrayList<Data>();
 	}
 
-	public void generateQueries() {
+	public void generateQueries(float[] distributions) {
 		System.out.println("Generating queries..");
-		setQueries(Tools.generateQuerys(queryLimit, noOfAxis));
+		setQueries(Tools.generateQuerys(queryLimit, noOfAxis, distributions));
 		System.out.println("Generated queries..");
 	}
 

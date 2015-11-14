@@ -49,7 +49,7 @@ public class ToolsTest {
 
 	@Test
 	public void testGetAverage() {
-		List<Data> dataInTheta = Tools.generateQuerys(3, 2);
+		List<Data> dataInTheta = Tools.generateQuerys(3, 2, null);
 		Data avg = Tools.getAverage(dataInTheta);
 		Assert.assertEquals(
 				(dataInTheta.get(0).getRow()[0] + dataInTheta.get(1).getRow()[0] + dataInTheta.get(2).getRow()[0])
@@ -63,7 +63,7 @@ public class ToolsTest {
 
 	@Test
 	public void testGenerateQuerys() {
-		List<Data> data = Tools.generateQuerys(10, 2);
+		List<Data> data = Tools.generateQuerys(10, 2, null);
 		int n = 5;
 		for (int i = 0; i < data.size(); i++) {
 			System.out.print(Arrays.toString(data.get(i).getRow()) + " ");

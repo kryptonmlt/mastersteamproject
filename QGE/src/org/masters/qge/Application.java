@@ -1,30 +1,19 @@
 package org.masters.qge;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.io.IOException;
-import java.util.List;
-
-import javax.swing.JFrame;
 
 import org.masters.qge.storage.Data;
 import org.masters.qge.storage.DataStorage;
 
-import de.erichseifert.gral.data.DataTable;
-import de.erichseifert.gral.plots.XYPlot;
-import de.erichseifert.gral.ui.InteractivePanel;
-
 public class Application {
 
-	public static void main(String args[]) throws IOException {
+	public static void main(String args[]) throws Exception {
 
 		if (args.length < 3) {
 			throw new IllegalArgumentException(
-					"2 arguments required: 1) path to input data file. 2) theta value in float 3) integer representing query limit 4) true if graph plotting is required");
+					"2 arguments required: 1) path to input data file. 2) theta value in float 3) integer representing query limit 4) L, Number of distributions 5...) distributions");
 		}
 
 		File input = new File(args[0]);
@@ -68,36 +57,51 @@ public class Application {
 			} catch (Exception e) {
 				System.out.println("Theta (2nd parameter) must be in float format example 0.1");
 			}
-			QueryGE qGE = new QueryGE(theta, queryLimit, noOfAxis);
-			qGE.generateQueries();
-			qGE.saveQueries();
-			List<Data> avgData = qGE.generateAVGPoints(qGE.getQueries());
-			if (args.length > 3 && "true".equals(args[3])) {
-				plot2DData("DATA.txt", DataStorage.getInstance().getDataSet(), 0);
-				plot2DData("AVGDATA.txt", avgData, 1);
-				System.out.println("Finished plotting..");
+
+			float[] distributions = null;
+
+			if (args.length > 3) {
+				int LwithoutValue = 0;
+				int distStart = 0;
+				float equalDistribution = 0;
+
+				int L = Integer.parseInt(args[3]);
+				if (L < 0) {
+					throw new Exception("L must be positive");
+				}
+				if (L != 0) {
+					distributions = new float[L];
+				}
+				LwithoutValue = L;
+				float totalL = 0;
+				if (args.length > 4) {
+					int j = 0;
+					LwithoutValue = L - (args.length - 4);
+					if (LwithoutValue < 0) {
+						throw new Exception("There cannot be more L Distributions than number of L");
+					}
+					for (int i = 4; i < args.length; i++, j++) {
+						distributions[j] = Float.parseFloat(args[i]);
+						totalL += distributions[j];
+					}
+					distStart = j;
+					if (totalL > 1 && totalL < 0) {
+						throw new Exception("L Distributions must add up to a value between 0 and 1");
+					}
+				}
+				equalDistribution = (1 - totalL) / LwithoutValue;
+
+				for (int i = distStart; i < distStart + LwithoutValue; i++) {
+					distributions[i] = equalDistribution;
+				}
 			}
+
+			QueryGE qGE = new QueryGE(theta, queryLimit, noOfAxis);
+			qGE.generateQueries(distributions);
+			qGE.saveQueries();
+			qGE.generateAVGPoints(qGE.getQueries());
+		} else {
+			System.out.println("Please fix input file...");
 		}
-	}
-
-	public static void plot2DData(String title, List<Data> avgData, int num) {
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		double width = screenSize.getWidth();
-		double height = screenSize.getHeight();
-
-		JFrame frame = new JFrame(title);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setBounds((int) (num * (width / 2)), (int) (height / 7), (int) (width / 2), (int) (height / 1.5));
-
-		DataTable data = new DataTable(Float.class, Float.class);
-		for (int i = 0; i < avgData.size(); i++) {
-			data.add(avgData.get(i).getRow()[0], avgData.get(i).getRow()[1]);
-		}
-
-		XYPlot plot = new XYPlot(data);
-		frame.getContentPane().add(new InteractivePanel(plot));
-		Color color = new Color(0.0f, 0.3f, 1.0f);
-		plot.getPointRenderer(data).setColor(color);
-		frame.setVisible(true);
 	}
 }
