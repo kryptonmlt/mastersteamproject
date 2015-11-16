@@ -26,7 +26,7 @@ public class QueryGE {
 
 	public void generateQueries(List<float[]> distributions) {
 		System.out.println("Generating queries..");
-		setQueries(Tools.generateQuerys(queryLimit, noOfAxis, distributions));
+		setQueries(Tools.getInstance().generateQuerys(queryLimit, noOfAxis, distributions));
 		System.out.println("Generated queries..");
 	}
 
@@ -38,7 +38,7 @@ public class QueryGE {
 			if (((c / (float) queries.size()) * 100) % 10 == 0) {
 				System.out.println("query completion: " + ((c / (float) queries.size()) * 100f) + "%");
 			}
-			Data d = Tools.getAverageDatumFromQuery(DataStorage.getInstance().getDataSet(), query, theta);
+			Data d = Tools.getInstance().getAverageDatumFromQuery(DataStorage.getInstance().getDataSet(), query, theta);
 			if (d != null) {
 				avgs.add(d);
 			}
