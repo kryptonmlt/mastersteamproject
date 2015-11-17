@@ -6,17 +6,17 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 import org.masters.qge.storage.Data;
-import org.masters.qge.tools.Tools;
+import org.masters.qge.utils.Tools;
+import org.masters.qge.utils.VectorFunctions;
 
 public class ToolsTest {
 
 	@Test
 	public void testDistance() {
-		Tools tools = Tools.getInstance();
 
 		float[] p1 = { -0.5f, -0.5f };
 		float[] p2 = { 0.5f, 0.5f };
-		Assert.assertEquals(1.41f, tools.distance(p1, p2), 0.1);
+		Assert.assertEquals(1.41f, VectorFunctions.distance(p1, p2), 0.1);
 	}
 
 	@Test

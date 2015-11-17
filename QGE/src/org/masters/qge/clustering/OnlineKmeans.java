@@ -3,7 +3,7 @@ package org.masters.qge.clustering;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.masters.qge.tools.Tools;
+import org.masters.qge.utils.VectorFunctions;
 
 public class OnlineKmeans {
 
@@ -20,12 +20,17 @@ public class OnlineKmeans {
 		return centroids;
 	}
 
+	/**
+	 * Update the centroid using the point
+	 * @param point
+	 * @return
+	 */
 	public Integer update(float[] point) {
 		if (centroids.size() < k) {
 			centroids.add(point);
 			return centroids.size() - 1;
 		} else {
-			Integer nearestCentroid = Tools.getInstance().classify(point, centroids);
+			Integer nearestCentroid = VectorFunctions.classify(point, centroids);
 			// Move centroid
 			this.centroids.set(nearestCentroid, moveCentroid(point, nearestCentroid));
 
@@ -34,9 +39,9 @@ public class OnlineKmeans {
 	}
 
 	public float[] moveCentroid(float[] point, int nearestCentroid) {
-		float[] update = Tools.getInstance().subtract(point, this.centroids.get(nearestCentroid));
-		update = Tools.getInstance().multiply(update, alpha);
-		return Tools.getInstance().add(this.centroids.get(nearestCentroid), update);
+		float[] update = VectorFunctions.subtract(point, this.centroids.get(nearestCentroid));
+		update = VectorFunctions.multiply(update, alpha);
+		return VectorFunctions.add(this.centroids.get(nearestCentroid), update);
 	}
 
 	public int getK() {
