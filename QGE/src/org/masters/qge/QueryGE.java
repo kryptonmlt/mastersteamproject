@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.masters.qge.clustering.OnlineKmeans;
 import org.masters.qge.storage.Data;
 import org.masters.qge.storage.DataStorage;
 import org.masters.qge.tools.Tools;
@@ -16,18 +17,54 @@ public class QueryGE {
 	private int queryLimit = 0;
 	private int noOfAxis = 0;
 	private List<Data> queries = null;
+	private OnlineKmeans online = null;
 
-	public QueryGE(float theta, int queryLimit, int noOfAxis) {
+	public QueryGE(float theta, int queryLimit, int noOfAxis, int k, float alpha) {
 		this.theta = theta;
 		this.queryLimit = queryLimit;
 		this.noOfAxis = noOfAxis;
 		queries = new ArrayList<Data>();
+		if (k != 0) {
+			online = new OnlineKmeans(k, alpha);
+		}
 	}
 
 	public void generateQueries(List<float[]> distributions) {
 		System.out.println("Generating queries..");
-		setQueries(Tools.getInstance().generateQuerys(queryLimit, noOfAxis, distributions));
+		try {
+			BufferedWriter writer = new BufferedWriter(
+					new FileWriter("queryclusters_" + online.getK() + "_" + online.getAlpha() + ".txt"));
+			if (distributions == null || distributions.isEmpty()) {
+				// generate totally random queries since no distributions
+				// specified
+				for (int i = 0; i < queryLimit; i++) {
+					float[] row = new float[noOfAxis];
+					for (int j = 0; j < noOfAxis; j++) {
+						row[j] = Tools.getInstance().getRandom().nextFloat() - 0.5f;
+					}
+					this.updateOnline(row, writer);
+					queries.add(new Data(row));
+				}
+			} else {
+				for (int i = 0; i < queryLimit; i++) {
+					Data q = Tools.getInstance().generateQuery(distributions);
+					this.updateOnline(q.getRow(), writer);
+					queries.add(q);
+				}
+			}
+			writer.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		System.out.println("Generated queries..");
+	}
+
+	private void updateOnline(float[] row, BufferedWriter writer) throws IOException {
+		if (online != null) {
+			int clusterId = online.update(row);
+			writer.write((clusterId + 1) + "\n");
+		}
+
 	}
 
 	public List<Data> generateAVGPoints(List<Data> queries) {

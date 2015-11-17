@@ -15,7 +15,7 @@ public class Application {
 
 		if (args.length < 3) {
 			throw new IllegalArgumentException(
-					"2 arguments required: 1) path to input data file. 2) theta value in float 3) integer representing query limit 4) L, Number of distributions 5...) distributions");
+					"6 arguments required: 1) path to input data file. 2) theta value in float 3) integer representing query limit 4) K 5) alpha 6) L file");
 		}
 
 		File input = new File(args[0]);
@@ -59,32 +59,9 @@ public class Application {
 			} catch (Exception e) {
 				System.out.println("Theta (2nd parameter) must be in float format example 0.1");
 			}
-
-			/*
-			 * float[] distributions = null;
-			 * 
-			 * if (args.length > 3) { int LwithoutValue = 0; int distStart = 0;
-			 * float equalDistribution = 0;
-			 * 
-			 * int L = Integer.parseInt(args[3]); if (L < 0) { throw new
-			 * Exception("L must be positive"); } if (L != 0) { distributions =
-			 * new float[L]; } LwithoutValue = L; float totalL = 0; if
-			 * (args.length > 4) { int j = 0; LwithoutValue = L - (args.length -
-			 * 4); if (LwithoutValue < 0) { throw new Exception(
-			 * "There cannot be more L Distributions than number of L"); } for
-			 * (int i = 4; i < args.length; i++, j++) { distributions[j] =
-			 * Float.parseFloat(args[i]); totalL += distributions[j]; }
-			 * distStart = j; if (totalL > 1 && totalL < 0) { throw new
-			 * Exception(
-			 * "L Distributions must add up to a value between 0 and 1"); } }
-			 * equalDistribution = (1 - totalL) / LwithoutValue;
-			 * 
-			 * for (int i = distStart; i < distStart + LwithoutValue; i++) {
-			 * distributions[i] = equalDistribution; } }
-			 */
 			List<float[]> lPoints = new ArrayList<float[]>();
-			if (args.length > 3) {
-				BufferedReader lReader = new BufferedReader(new FileReader(args[3]));
+			if (args.length > 5) {
+				BufferedReader lReader = new BufferedReader(new FileReader(args[5]));
 				temp = null;
 				while ((temp = lReader.readLine()) != null) {
 					String[] points = temp.split(",");
@@ -96,8 +73,16 @@ public class Application {
 				}
 				lReader.close();
 			}
+			int k = 0;
+			float alpha = 0.0f;
+			if (args.length > 3) {
+				k = Integer.parseInt(args[3]);
+			}
+			if (args.length > 4) {
+				alpha = Float.parseFloat(args[4]);
+			}
 
-			QueryGE qGE = new QueryGE(theta, queryLimit, noOfAxis);
+			QueryGE qGE = new QueryGE(theta, queryLimit, noOfAxis, k, alpha);
 			qGE.generateQueries(lPoints);
 			qGE.saveQueries();
 			qGE.generateAVGPoints(qGE.getQueries());

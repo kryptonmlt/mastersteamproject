@@ -1,7 +1,6 @@
 package test.org.masters.qge.tools;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Assert;
@@ -17,7 +16,7 @@ public class ToolsTest {
 
 		float[] p1 = { -0.5f, -0.5f };
 		float[] p2 = { 0.5f, 0.5f };
-		Assert.assertEquals(1.41f, tools.distance(new Data(p1), new Data(p2)), 0.1);
+		Assert.assertEquals(1.41f, tools.distance(p1, p2), 0.1);
 	}
 
 	@Test
@@ -51,38 +50,6 @@ public class ToolsTest {
 		dataSet.add(new Data(p3));
 		Data avg = tools.getAverageDatumFromQuery(dataSet, new Data(query), 0.1f);
 		Assert.assertNull(avg);
-	}
-
-	@Test
-	public void testGetAverage() {
-		Tools tools = Tools.getInstance();
-
-		List<Data> dataInTheta = tools.generateQuerys(3, 2, null);
-		Data avg = tools.getAverage(dataInTheta);
-		Assert.assertEquals(
-				(dataInTheta.get(0).getRow()[0] + dataInTheta.get(1).getRow()[0] + dataInTheta.get(2).getRow()[0])
-						/ 3.0f,
-				avg.getRow()[0], 0.001);
-		Assert.assertEquals(
-				(dataInTheta.get(0).getRow()[1] + dataInTheta.get(1).getRow()[1] + dataInTheta.get(2).getRow()[1])
-						/ 3.0f,
-				avg.getRow()[1], 0.001);
-	}
-
-	@Test
-	public void testGenerateQuerys() {
-		Tools tools = Tools.getInstance();
-
-		List<Data> data = tools.generateQuerys(10, 2, null);
-		int n = 5;
-		for (int i = 0; i < data.size(); i++) {
-			System.out.print(Arrays.toString(data.get(i).getRow()) + " ");
-			n--;
-			if (n == 0) {
-				System.out.println();
-				n = 5;
-			}
-		}
 	}
 
 }
