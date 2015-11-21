@@ -34,53 +34,33 @@ public class QueryGE {
 	public List<Data> generateQueries(int queryLimit, List<float[]> distributions, int noOfAxis, int k, float alpha) {
 		List<Data> queries = new ArrayList<Data>();
 		OnlineKmeans queriesOnline = null;
-		if (k != 0) {
-			queriesOnline = new OnlineKmeans(k, alpha);
-		}
-
-		System.out.println("Generating queries..");
+		BufferedWriter writer = null;
 		try {
-			BufferedWriter writer = new BufferedWriter(
-					new FileWriter("queryclusters_" + queriesOnline.getK() + "_" + queriesOnline.getAlpha() + ".txt"));
-			if (distributions == null || distributions.isEmpty()) {
-				// generate totally random queries since no distributions
-				// specified
-				for (int i = 0; i < queryLimit; i++) {
-					float[] row = new float[noOfAxis];
-					for (int j = 0; j < noOfAxis; j++) {
-						row[j] = Tools.getInstance().getRandom().nextFloat() - 0.5f;
-					}
-					this.updateOnline(queriesOnline, row, writer);
-					queries.add(new Data(row));
-				}
-			} else {
-				for (int i = 0; i < queryLimit; i++) {
-					Data q = Tools.getInstance().generateQuery(distributions);
-					this.updateOnline(queriesOnline, q.getRow(), writer);
-					queries.add(q);
+			if (k != 0) {
+				queriesOnline = new OnlineKmeans(k, alpha);
+				writer = new BufferedWriter(new FileWriter(
+						"queryclusters_" + queriesOnline.getK() + "_" + queriesOnline.getAlpha() + ".txt"));
+
+			}
+
+			System.out.println("Generating queries..");
+			for (int i = 0; i < queryLimit; i++) {
+				Data q = Tools.getInstance().generateQuery(distributions, noOfAxis);
+				queries.add(q);
+				// update online kmeans and write cluster to file
+				if (queriesOnline != null) {
+					int clusterId = queriesOnline.update(q.getRow());
+					writer.write((clusterId + 1) + "\n");
 				}
 			}
-			writer.close();
+			if (queriesOnline != null) {
+				writer.close();
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		System.out.println("Generated queries..");
 		return queries;
-	}
-
-	/**
-	 * Updates online kmeans and writes to file
-	 * 
-	 * @param onine
-	 * @param row
-	 * @param writer
-	 * @throws IOException
-	 */
-	private void updateOnline(OnlineKmeans onine, float[] row, BufferedWriter writer) throws IOException {
-		if (onine != null) {
-			int clusterId = onine.update(row);
-			writer.write((clusterId + 1) + "\n");
-		}
 	}
 
 	/**

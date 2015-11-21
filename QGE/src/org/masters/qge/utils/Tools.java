@@ -67,9 +67,20 @@ public class Tools {
 	 * Generate Query using given subspaces (lPoints)
 	 * 
 	 * @param lPoints
-	 * @return
+	 *            if lPoints is null use whole space. Else use gaussian
+	 *            distribution on subspaces
+	 * @return Data
 	 */
-	public Data generateQuery(List<float[]> lPoints) {
+	public Data generateQuery(List<float[]> lPoints, int noOfAxis) {
+
+		if (lPoints == null || lPoints.isEmpty()) {
+			float[] row = new float[noOfAxis];
+			for (int i = 0; i < row.length; i++) {
+				row[i] = Tools.getInstance().getRandom().nextFloat() - 0.5f;
+			}
+			return new Data(row);
+		}
+
 		int J = r.nextInt(lPoints.size()); // select random subspace
 		float[] input = lPoints.get(J);
 
