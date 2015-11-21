@@ -53,7 +53,7 @@ public class Tools {
 		}
 		float[] avg = new float[dataInTheta.get(0).getRow().length];
 		for (Data d : dataInTheta) {
-			for (int i = 0; i < dataInTheta.get(0).getRow().length; i++) {
+			for (int i = 0; i < d.getRow().length; i++) {
 				avg[i] += d.getRow()[i];
 			}
 		}
