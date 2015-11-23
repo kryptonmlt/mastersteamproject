@@ -93,7 +93,7 @@ public class Application {
 
 			// query generation
 			QueryGE qGE = new QueryGE();
-			List<Data> queries = qGE.generateQueries(queryLimit, lPoints, noOfAxis, k, alpha);
+			List<Data> queries = qGE.generateQueries(queryLimit, lPoints, noOfAxis, k, alpha, theta);
 			qGE.saveQueries(queries, theta, queryLimit);
 			List<Data> avgData = qGE.generateAVGPoints(dataSet, queries, theta);
 			qGE.saveAvgData(avgData, theta, queryLimit);

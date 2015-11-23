@@ -31,15 +31,16 @@ public class QueryGE {
 	 * @param alpha
 	 *            learning rate for query clustering
 	 */
-	public List<Data> generateQueries(int queryLimit, List<float[]> distributions, int noOfAxis, int k, float alpha) {
+	public List<Data> generateQueries(int queryLimit, List<float[]> distributions, int noOfAxis, int k, float alpha,
+			float theta) {
 		List<Data> queries = new ArrayList<Data>();
 		OnlineKmeans queriesOnline = null;
 		BufferedWriter writer = null;
 		try {
 			if (k != 0) {
 				queriesOnline = new OnlineKmeans(k, alpha);
-				writer = new BufferedWriter(new FileWriter(
-						"queryclusters_" + queriesOnline.getK() + "_" + queriesOnline.getAlpha() + ".txt"));
+				writer = new BufferedWriter(new FileWriter("queryclusters_" + theta + "_" + queriesOnline.getK() + "_"
+						+ queriesOnline.getAlpha() + ".txt"));
 
 			}
 
