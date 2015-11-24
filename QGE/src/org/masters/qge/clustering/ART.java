@@ -5,15 +5,16 @@ import java.util.List;
 
 import org.masters.qge.utils.VectorFunctions;
 
-public class OnlineKmeans implements Clustering {
+public class ART implements Clustering {
 
-	private Integer k;
-	private List<float[]> centroids = new ArrayList<float[]>();
+	private List<float[]> centroids;
+	private float row;
 	private float alpha = 0.1f;
 
-	public OnlineKmeans(Integer k, float alpha) {
-		this.k = k;
+	public ART(float row, float alpha) {
+		this.row = row;
 		this.alpha = alpha;
+		centroids = new ArrayList<float[]>();
 	}
 
 	@Override
@@ -23,16 +24,22 @@ public class OnlineKmeans implements Clustering {
 
 	@Override
 	public Integer update(float[] point) {
-		if (centroids.size() < k) {
+		int nearestCentroid = VectorFunctions.classify(point, centroids);
+		if (nearestCentroid == -1) {
 			centroids.add(point);
-			return centroids.size() - 1;
+			nearestCentroid = 0;
 		} else {
-			Integer nearestCentroid = VectorFunctions.classify(point, centroids);
-			// Move centroid
-			this.centroids.set(nearestCentroid, moveCentroid(point, nearestCentroid));
+			if (VectorFunctions.distance(point, centroids.get(nearestCentroid)) < row) {
+				// Move centroid
+				this.centroids.set(nearestCentroid, moveCentroid(point, nearestCentroid));
 
-			return nearestCentroid;
+			} else {
+				centroids.add(point);
+				nearestCentroid = centroids.size() - 1;
+			}
 		}
+
+		return nearestCentroid;
 	}
 
 	public float[] moveCentroid(float[] point, int nearestCentroid) {
@@ -41,16 +48,8 @@ public class OnlineKmeans implements Clustering {
 		return VectorFunctions.add(this.centroids.get(nearestCentroid), update);
 	}
 
-	public int getK() {
-		return k;
-	}
-
-	public float getAlpha() {
-		return alpha;
-	}
-
 	@Override
 	public String getDescription() {
-		return k + "_" + alpha;
+		return row + "_" + alpha;
 	}
 }

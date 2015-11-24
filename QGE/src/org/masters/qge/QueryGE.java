@@ -1,11 +1,13 @@
 package org.masters.qge;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.masters.qge.clustering.Clustering;
 import org.masters.qge.clustering.OnlineKmeans;
 import org.masters.qge.storage.Data;
 import org.masters.qge.utils.Tools;
@@ -61,6 +63,7 @@ public class QueryGE {
 			e.printStackTrace();
 		}
 		System.out.println("Generated queries..");
+		this.saveCentroids(queriesOnline);
 		return queries;
 	}
 
@@ -74,7 +77,7 @@ public class QueryGE {
 		System.out.println("Generating Average points from queries");
 		int c = 0;
 		for (Data query : queries) {
-			if (((c / (float) queries.size()) * 100) % 10 == 0) {
+			if (((c / (float) queries.size()) * 100) % 10 == 0) {//output percentage complete..
 				System.out.println("query completion: " + ((c / (float) queries.size()) * 100f) + "%");
 			}
 			Data d = Tools.getInstance().getAverageDatumFromQuery(dataSet, query, theta);
@@ -84,6 +87,36 @@ public class QueryGE {
 			c++;
 		}
 		return avgData;
+	}
+
+	/**
+	 * Write the centroids to file
+	 * 
+	 * @param clustering
+	 */
+	public void saveCentroids(Clustering clustering) {
+		String fileName = "centroids_" + clustering.getDescription() + ".txt";
+		System.out.println("Writing " + fileName);
+		BufferedWriter centroidWriter = null;
+		try {
+			centroidWriter = new BufferedWriter(new FileWriter(new File(fileName)));
+			for (float[] cluster : clustering.getCentroids()) {
+				centroidWriter.write(cluster[0] + "," + cluster[1] + "\n");
+			}
+			centroidWriter.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		try {
+			if (centroidWriter != null) {
+				centroidWriter.close();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		System.out.println("Finished " + fileName);
 	}
 
 	/**
