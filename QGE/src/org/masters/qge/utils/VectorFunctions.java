@@ -14,7 +14,6 @@ public class VectorFunctions {
 	 * @return
 	 */
 	public static float distance(float[] p1, float[] p2) {
-
 		float dist = 0;
 		for (int i = 0; i < p1.length; i++) {
 			dist += (p1[i] - p2[i]) * (p1[i] - p2[i]);
@@ -58,12 +57,10 @@ public class VectorFunctions {
 	}
 
 	public static float[] add(float[] vector1, float[] vector2) {
-
 		float[] result = new float[vector1.length];
 		for (int i = 0; i < vector1.length; i++) {
 			result[i] = vector1[i] + vector2[i];
 		}
-
 		return result;
 	}
 

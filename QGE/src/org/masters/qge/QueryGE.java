@@ -56,7 +56,7 @@ public class QueryGE {
 			e.printStackTrace();
 		}
 		System.out.println("Generated queries..");
-		this.saveCentroids(queriesOnline);
+		this.saveCentroids("", queriesOnline);
 		return queries;
 	}
 
@@ -89,7 +89,7 @@ public class QueryGE {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		this.saveCentroids(dataArt);
+		this.saveCentroids("", dataArt);
 		return avgData;
 	}
 
@@ -107,12 +107,17 @@ public class QueryGE {
 		for (int i = 0; i < queryDataClusterMap.length; i++) {
 			queryDataClusterMap[i] = -1;
 		}
+
 		try {
 			// initialise file writers
-			BufferedWriter queryWriter = new BufferedWriter(
+			BufferedWriter queryClusterWriter = new BufferedWriter(
 					new FileWriter("queryclusters_" + theta + "_" + queriesOnline.getDescription() + ".txt"));
 			BufferedWriter dataWriter = new BufferedWriter(
 					new FileWriter("dataclusters_" + theta + "_" + dataArt.getDescription() + ".txt"));
+			BufferedWriter avgDataWriter = new BufferedWriter(
+					new FileWriter("AVGDATA_" + theta + "_" + queryLimit + ".txt"));
+			BufferedWriter queryWriter = new BufferedWriter(
+					new FileWriter("seta_" + theta + "_" + queryLimit + ".txt"));
 
 			System.out.println("Generating queries..");
 			for (int i = 0; i < queryLimit; i++) {
@@ -121,33 +126,38 @@ public class QueryGE {
 				Data query = Tools.getInstance().generateQuery(distributions, noOfAxis);
 				// update online kmeans and write cluster to file
 				int queryClusterId = queriesOnline.update(query.getRow());
-				queryWriter.write((queryClusterId + 1) + "\n");
+				queryClusterWriter.write((queryClusterId + 1) + "\n");
 
 				// run query to get avg data
 				Data dataCentroid = Tools.getInstance().getAverageDatumFromQuery(dataSet, query, theta);
 				if (dataCentroid != null) {
+
 					int dataClusterId = dataArt.update(dataCentroid.getRow());
 					dataWriter.write((dataClusterId + 1) + "\n");
+					avgDataWriter
+							.write(Arrays.toString(dataCentroid.getRow()).replace("]", "").replace("[", "") + "\n");
 					queryDataClusterMap[queryClusterId] = dataClusterId;
+
+					// write set A
+					writeToBufferedWriter(queryWriter, query.getRow(), dataCentroid.getRow());
 				}
 			}
-			queryWriter.close();
+			queryClusterWriter.close();
 			dataWriter.close();
+			avgDataWriter.close();
+			queryWriter.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		System.out.println("Generated queries..");
-		this.saveCentroids(queriesOnline);
-		this.saveCentroids(dataArt);
+		this.saveCentroids("Queries", queriesOnline);
+		this.saveCentroids("AVGDATA", dataArt);
 		try {
 			BufferedWriter mapWriter = new BufferedWriter(new FileWriter("queryDataMap_" + theta + ".txt"));
 			for (int i = 0; i < queryDataClusterMap.length; i++) {
 				if (queryDataClusterMap[i] != -1) {
-					mapWriter.write(
-							Arrays.toString(queriesOnline.getCentroids().get(i)).replace("]", "").replace("[", "") + ";"
-									+ Arrays.toString(dataArt.getCentroids().get(queryDataClusterMap[i]))
-											.replace("]", "").replace("[", "")
-									+ "\n");
+					writeToBufferedWriter(mapWriter, queriesOnline.getCentroids().get(i),
+							dataArt.getCentroids().get(queryDataClusterMap[i]));
 					mapWriter.flush();
 				}
 			}
@@ -157,14 +167,19 @@ public class QueryGE {
 		}
 	}
 
+	private void writeToBufferedWriter(BufferedWriter bw, float[] query, float[] avg) throws IOException {
+		bw.write(Arrays.toString(query).replace("]", "").replace("[", "") + ";"
+				+ Arrays.toString(avg).replace("]", "").replace("[", "") + "\n");
+	}
+
 	/**
 	 * Write the centroids to file
 	 * 
 	 * @param clustering
 	 */
-	public void saveCentroids(Clustering clustering) {
+	public void saveCentroids(String name, Clustering clustering) {
 		if (clustering != null) {
-			String fileName = "centroids_" + clustering.getDescription() + ".txt";
+			String fileName = "centroids_" + name + "_" + clustering.getDescription() + ".txt";
 			System.out.println("Writing " + fileName);
 			BufferedWriter centroidWriter = null;
 			try {

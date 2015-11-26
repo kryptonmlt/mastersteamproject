@@ -40,4 +40,10 @@ public class OnlineKmeans implements Clustering {
 	public String getDescription() {
 		return k + "_" + alpha;
 	}
+
+	@Override
+	public void setCentroids(List<float[]> centroids) {
+		this.centroids = centroids;
+		
+	}
 }

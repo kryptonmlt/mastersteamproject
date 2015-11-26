@@ -15,4 +15,6 @@ public interface Clustering {
 	Integer update(float[] point);
 	
 	String getDescription();
+	
+	void setCentroids(List<float[]> centroids);
 }

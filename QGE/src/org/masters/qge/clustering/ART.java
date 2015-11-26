@@ -39,12 +39,17 @@ public class ART implements Clustering {
 				nearestCentroid = centroids.size() - 1;
 			}
 		}
-
 		return nearestCentroid;
 	}
 
 	@Override
 	public String getDescription() {
 		return row + "_" + alpha;
+	}
+	
+	@Override
+	public void setCentroids(List<float[]> centroids) {
+		this.centroids = centroids;
+		
 	}
 }
