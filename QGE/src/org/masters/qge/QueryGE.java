@@ -5,8 +5,10 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import org.masters.qge.clustering.ART;
 import org.masters.qge.clustering.Clustering;
 import org.masters.qge.clustering.OnlineKmeans;
 import org.masters.qge.storage.Data;
@@ -36,29 +38,20 @@ public class QueryGE {
 	public List<Data> generateQueries(int queryLimit, List<float[]> distributions, int noOfAxis, int k, float alpha,
 			float theta) {
 		List<Data> queries = new ArrayList<Data>();
-		OnlineKmeans queriesOnline = null;
-		BufferedWriter writer = null;
+		Clustering queriesOnline = new OnlineKmeans(k, alpha);
 		try {
-			if (k != 0) {
-				queriesOnline = new OnlineKmeans(k, alpha);
-				writer = new BufferedWriter(new FileWriter("queryclusters_" + theta + "_" + queriesOnline.getK() + "_"
-						+ queriesOnline.getAlpha() + ".txt"));
-
-			}
+			BufferedWriter queryWriter = new BufferedWriter(
+					new FileWriter("queryclusters_" + theta + "_" + queriesOnline.getDescription() + ".txt"));
 
 			System.out.println("Generating queries..");
 			for (int i = 0; i < queryLimit; i++) {
 				Data q = Tools.getInstance().generateQuery(distributions, noOfAxis);
 				queries.add(q);
 				// update online kmeans and write cluster to file
-				if (queriesOnline != null) {
-					int clusterId = queriesOnline.update(q.getRow());
-					writer.write((clusterId + 1) + "\n");
-				}
+				int clusterId = queriesOnline.update(q.getRow());
+				queryWriter.write((clusterId + 1) + "\n");
 			}
-			if (queriesOnline != null) {
-				writer.close();
-			}
+			queryWriter.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -68,25 +61,100 @@ public class QueryGE {
 	}
 
 	/**
-	 * Generates the average points using the data and queries provided
+	 * Generates the average points using the data and queries provided Also
+	 * clusters data using ART
 	 * 
 	 * @param queries
 	 */
-	public List<Data> generateAVGPoints(List<Data> dataSet, List<Data> queries, float theta) {
+	public List<Data> generateAVGPoints(List<Data> dataSet, List<Data> queries, float theta, float row, float alpha) {
 		List<Data> avgData = new ArrayList<Data>();
-		System.out.println("Generating Average points from queries");
-		int c = 0;
-		for (Data query : queries) {
-			if (((c / (float) queries.size()) * 100) % 10 == 0) {//output percentage complete..
-				System.out.println("query completion: " + ((c / (float) queries.size()) * 100f) + "%");
+		Clustering dataArt = new ART(row, alpha);
+		try {
+			BufferedWriter dataWriter = new BufferedWriter(
+					new FileWriter("dataclusters_" + theta + "_" + dataArt.getDescription() + ".txt"));
+
+			System.out.println("Generating Average points from queries");
+			int c = 0;
+			for (Data query : queries) {
+				printQueryCompletion(c, queries.size());
+				Data d = Tools.getInstance().getAverageDatumFromQuery(dataSet, query, theta);
+				if (d != null) {
+					avgData.add(d);
+					int clusterId = dataArt.update(d.getRow());
+					dataWriter.write((clusterId + 1) + "\n");
+				}
+				c++;
 			}
-			Data d = Tools.getInstance().getAverageDatumFromQuery(dataSet, query, theta);
-			if (d != null) {
-				avgData.add(d);
-			}
-			c++;
+			dataWriter.close();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+		this.saveCentroids(dataArt);
 		return avgData;
+	}
+
+	private void printQueryCompletion(int c, float querySize) {
+		if (((c / querySize) * 100) % 10 == 0) {// output percentage complete..
+			System.out.println("query completion: " + ((c / querySize) * 100f) + "%");
+		}
+	}
+
+	public void generateAndRunQueries(int queryLimit, List<float[]> distributions, int noOfAxis, int k, float alpha,
+			float theta, List<Data> dataSet, float row) {
+		Clustering queriesOnline = new OnlineKmeans(k, alpha);
+		Clustering dataArt = new ART(row, alpha);
+		int[] queryDataClusterMap = new int[k];
+		for (int i = 0; i < queryDataClusterMap.length; i++) {
+			queryDataClusterMap[i] = -1;
+		}
+		try {
+			// initialise file writers
+			BufferedWriter queryWriter = new BufferedWriter(
+					new FileWriter("queryclusters_" + theta + "_" + queriesOnline.getDescription() + ".txt"));
+			BufferedWriter dataWriter = new BufferedWriter(
+					new FileWriter("dataclusters_" + theta + "_" + dataArt.getDescription() + ".txt"));
+
+			System.out.println("Generating queries..");
+			for (int i = 0; i < queryLimit; i++) {
+				printQueryCompletion(i, queryLimit);
+				// generate query
+				Data query = Tools.getInstance().generateQuery(distributions, noOfAxis);
+				// update online kmeans and write cluster to file
+				int queryClusterId = queriesOnline.update(query.getRow());
+				queryWriter.write((queryClusterId + 1) + "\n");
+
+				// run query to get avg data
+				Data dataCentroid = Tools.getInstance().getAverageDatumFromQuery(dataSet, query, theta);
+				if (dataCentroid != null) {
+					int dataClusterId = dataArt.update(dataCentroid.getRow());
+					dataWriter.write((dataClusterId + 1) + "\n");
+					queryDataClusterMap[queryClusterId] = dataClusterId;
+				}
+			}
+			queryWriter.close();
+			dataWriter.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("Generated queries..");
+		this.saveCentroids(queriesOnline);
+		this.saveCentroids(dataArt);
+		try {
+			BufferedWriter mapWriter = new BufferedWriter(new FileWriter("queryDataMap_" + theta + ".txt"));
+			for (int i = 0; i < queryDataClusterMap.length; i++) {
+				if (queryDataClusterMap[i] != -1) {
+					mapWriter.write(
+							Arrays.toString(queriesOnline.getCentroids().get(i)).replace("]", "").replace("[", "") + ";"
+									+ Arrays.toString(dataArt.getCentroids().get(queryDataClusterMap[i]))
+											.replace("]", "").replace("[", "")
+									+ "\n");
+					mapWriter.flush();
+				}
+			}
+			mapWriter.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -95,28 +163,30 @@ public class QueryGE {
 	 * @param clustering
 	 */
 	public void saveCentroids(Clustering clustering) {
-		String fileName = "centroids_" + clustering.getDescription() + ".txt";
-		System.out.println("Writing " + fileName);
-		BufferedWriter centroidWriter = null;
-		try {
-			centroidWriter = new BufferedWriter(new FileWriter(new File(fileName)));
-			for (float[] cluster : clustering.getCentroids()) {
-				centroidWriter.write(cluster[0] + "," + cluster[1] + "\n");
+		if (clustering != null) {
+			String fileName = "centroids_" + clustering.getDescription() + ".txt";
+			System.out.println("Writing " + fileName);
+			BufferedWriter centroidWriter = null;
+			try {
+				centroidWriter = new BufferedWriter(new FileWriter(new File(fileName)));
+				for (float[] cluster : clustering.getCentroids()) {
+					centroidWriter.write(cluster[0] + "," + cluster[1] + "\n");
+				}
+				centroidWriter.flush();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
-			centroidWriter.flush();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 
-		try {
-			if (centroidWriter != null) {
-				centroidWriter.close();
+			try {
+				if (centroidWriter != null) {
+					centroidWriter.close();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 
-		System.out.println("Finished " + fileName);
+			System.out.println("Finished " + fileName);
+		}
 	}
 
 	/**

@@ -24,18 +24,18 @@ public class Application {
 
 		if (args.length < 3) {
 			throw new IllegalArgumentException(
-					"6 arguments required: 1) path to input data file. 2) theta value in float 3) integer representing query limit 4) K 5) alpha 6) L file");
+					"6 arguments required: 1) path to input data file. 2) theta value in float 3) integer representing query limit 4) K 5) alpha 6) row 7) L file");
 		}
 
 		// read file and populate DataSet
 		boolean completed = false;
 		List<Data> dataSet = new ArrayList<Data>();
 
-		File input = new File(args[0]);
-		if (!input.exists()) {
+		File dataFile = new File(args[0]);
+		if (!dataFile.exists()) {
 			throw new IllegalArgumentException("File does not exist");
 		}
-		BufferedReader br = new BufferedReader(new FileReader(input));
+		BufferedReader br = new BufferedReader(new FileReader(dataFile));
 		try {
 			String temp = null;
 			while ((temp = br.readLine()) != null) {
@@ -51,14 +51,31 @@ public class Application {
 			br.close();
 		}
 
+		// Read L File containing subspaces
+		List<float[]> lPoints = new ArrayList<float[]>();
+		if (args.length > 6) {
+			BufferedReader lReader = new BufferedReader(new FileReader(args[6]));
+			String temp = null;
+			while ((temp = lReader.readLine()) != null) {
+				String[] points = temp.split(",");
+				float[] r = new float[3];
+				for (int i = 0; i < points.length; i++) {
+					r[i] = Float.parseFloat(points[i]);
+				}
+				lPoints.add(r);
+			}
+			lReader.close();
+		}
+
 		// completed is true only if no errors where encountered when reading
 		// the data file.
 		if (completed) {
 			// variables for query generation
 			float theta = 0.0f;
 			int queryLimit = 0;
-			int k = 0;
-			float alpha = 0.0f;
+			int k = lPoints.isEmpty() ? 1 : lPoints.size();
+			float alpha = 0.05f;
+			float row = 0.1f;
 			int noOfAxis = dataSet.get(0).getRow().length;
 
 			try {// read from commandline
@@ -70,33 +87,23 @@ public class Application {
 				if (args.length > 4) {
 					alpha = Float.parseFloat(args[4]);
 				}
+				if (args.length > 5) {
+					row = Float.parseFloat(args[5]);
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 				System.out.println("Theta and alpha must be a float, query limit and k an integer");
 			}
 
-			// Read L File containing subspaces
-			List<float[]> lPoints = new ArrayList<float[]>();
-			if (args.length > 5) {
-				BufferedReader lReader = new BufferedReader(new FileReader(args[5]));
-				String temp = null;
-				while ((temp = lReader.readLine()) != null) {
-					String[] points = temp.split(",");
-					float[] r = new float[3];
-					for (int i = 0; i < points.length; i++) {
-						r[i] = Float.parseFloat(points[i]);
-					}
-					lPoints.add(r);
-				}
-				lReader.close();
-			}
-
 			// query generation
 			QueryGE qGE = new QueryGE();
-			List<Data> queries = qGE.generateQueries(queryLimit, lPoints, noOfAxis, k, alpha, theta);
-			qGE.saveQueries(queries, theta, queryLimit);
-			List<Data> avgData = qGE.generateAVGPoints(dataSet, queries, theta);
-			qGE.saveAvgData(avgData, theta, queryLimit);
+			// List<Data> queries = qGE.generateQueries(queryLimit, lPoints,
+			// noOfAxis, k, alpha, theta);
+			// qGE.saveQueries(queries, theta, queryLimit);
+			// List<Data> avgData = qGE.generateAVGPoints(dataSet, queries,
+			// theta, row, alpha);
+			// qGE.saveAvgData(avgData, theta, queryLimit);
+			qGE.generateAndRunQueries(queryLimit, lPoints, noOfAxis, k, alpha, theta, dataSet, row);
 		} else {
 			System.out.println("Please fix input file...");
 		}

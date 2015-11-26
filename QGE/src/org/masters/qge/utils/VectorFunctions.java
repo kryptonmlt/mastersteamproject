@@ -30,7 +30,7 @@ public class VectorFunctions {
 	 */
 	public static int classify(float[] point, List<float[]> centroids) {
 		float minDist = Float.MAX_VALUE;
-		int ans = 0;
+		int ans = -1;
 		for (int i = 0; i < centroids.size(); i++) {
 			float tempDist = VectorFunctions.distance(point, centroids.get(i));
 			if (tempDist < minDist) {
