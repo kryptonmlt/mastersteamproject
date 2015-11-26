@@ -31,7 +31,8 @@ public class ART implements Clustering {
 		} else {
 			if (VectorFunctions.distance(point, centroids.get(nearestCentroid)) < row) {
 				// Move centroid
-				this.centroids.set(nearestCentroid, moveCentroid(point, nearestCentroid));
+				this.centroids.set(nearestCentroid,
+						VectorFunctions.moveCentroid(point, centroids.get(nearestCentroid), alpha));
 
 			} else {
 				centroids.add(point);
@@ -40,12 +41,6 @@ public class ART implements Clustering {
 		}
 
 		return nearestCentroid;
-	}
-
-	public float[] moveCentroid(float[] point, int nearestCentroid) {
-		float[] update = VectorFunctions.subtract(point, this.centroids.get(nearestCentroid));
-		update = VectorFunctions.multiply(update, alpha);
-		return VectorFunctions.add(this.centroids.get(nearestCentroid), update);
 	}
 
 	@Override

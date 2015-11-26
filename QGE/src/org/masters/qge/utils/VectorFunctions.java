@@ -66,4 +66,10 @@ public class VectorFunctions {
 
 		return result;
 	}
+
+	public static float[] moveCentroid(float[] point, float[] centroid, float alpha) {
+		float[] update = VectorFunctions.subtract(point, centroid);
+		update = VectorFunctions.multiply(update, alpha);
+		return VectorFunctions.add(centroid, update);
+	}
 }

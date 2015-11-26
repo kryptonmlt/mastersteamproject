@@ -29,24 +29,11 @@ public class OnlineKmeans implements Clustering {
 		} else {
 			Integer nearestCentroid = VectorFunctions.classify(point, centroids);
 			// Move centroid
-			this.centroids.set(nearestCentroid, moveCentroid(point, nearestCentroid));
+			this.centroids.set(nearestCentroid,
+					VectorFunctions.moveCentroid(point, centroids.get(nearestCentroid), alpha));
 
 			return nearestCentroid;
 		}
-	}
-
-	public float[] moveCentroid(float[] point, int nearestCentroid) {
-		float[] update = VectorFunctions.subtract(point, this.centroids.get(nearestCentroid));
-		update = VectorFunctions.multiply(update, alpha);
-		return VectorFunctions.add(this.centroids.get(nearestCentroid), update);
-	}
-
-	public int getK() {
-		return k;
-	}
-
-	public float getAlpha() {
-		return alpha;
 	}
 
 	@Override
