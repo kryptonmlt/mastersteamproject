@@ -1,13 +1,8 @@
 package org.masters.qge.utils;
 
-import java.io.BufferedWriter;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-
-import org.masters.qge.storage.Data;
 
 public class Tools {
 
@@ -34,10 +29,10 @@ public class Tools {
 	 *            search area next to query
 	 * @return
 	 */
-	public Data getAverageDatumFromQuery(List<Data> dataSet, Data query, float theta) {
-		List<Data> dataInTheta = new ArrayList<Data>();
-		for (Data d : dataSet) {
-			if (VectorFunctions.distance(query.getRow(), d.getRow()) < theta) {
+	public float[] getAverageDatumFromQuery(List<float[]> dataSet, float[] query, float theta) {
+		List<float[]> dataInTheta = new ArrayList<float[]>();
+		for (float[] d : dataSet) {
+			if (VectorFunctions.distance(query, d) < theta) {
 				dataInTheta.add(d);
 			}
 		}
@@ -50,20 +45,20 @@ public class Tools {
 	 * @param dataInTheta
 	 * @return
 	 */
-	public Data getAverage(List<Data> dataInTheta) {
+	public float[] getAverage(List<float[]> dataInTheta) {
 		if (dataInTheta.isEmpty()) {
 			return null;
 		}
-		float[] avg = new float[dataInTheta.get(0).getRow().length];
-		for (Data d : dataInTheta) {
-			for (int i = 0; i < d.getRow().length; i++) {
-				avg[i] += d.getRow()[i];
+		float[] avg = new float[dataInTheta.get(0).length];
+		for (float[] d : dataInTheta) {
+			for (int i = 0; i < d.length; i++) {
+				avg[i] += d[i];
 			}
 		}
 		for (int i = 0; i < avg.length; i++) {
 			avg[i] = (float) (Math.round((avg[i] / dataInTheta.size()) * 10000.0) / 10000.0);
 		}
-		return new Data(avg);
+		return avg;
 	}
 
 	/**
@@ -74,14 +69,14 @@ public class Tools {
 	 *            distribution on subspaces
 	 * @return Data
 	 */
-	public Data generateQuery(List<float[]> lPoints, int noOfAxis) {
+	public float[] generateQuery(List<float[]> lPoints, int noOfAxis) {
 
 		if (lPoints == null || lPoints.isEmpty()) {
 			float[] row = new float[noOfAxis];
 			for (int i = 0; i < row.length; i++) {
 				row[i] = Tools.getInstance().getRandom().nextFloat() - 0.5f;
 			}
-			return new Data(row);
+			return row;
 		}
 
 		int J = r.nextInt(lPoints.size()); // select random subspace
@@ -104,7 +99,7 @@ public class Tools {
 	 *            of box
 	 * @return
 	 */
-	private Data getRandomPointInBox(float[] point, float width) {
+	private float[] getRandomPointInBox(float[] point, float width) {
 
 		float[] result = new float[point.length];
 		for (int i = 0; i < result.length; i++) {
@@ -118,7 +113,7 @@ public class Tools {
 			}
 			result[i] = g;
 		}
-		return new Data(result);
+		return result;
 	}
 
 	public Random getRandom() {

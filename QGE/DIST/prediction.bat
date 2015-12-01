@@ -1,0 +1,1 @@
+java -jar Prediction.jar queryDataMap_0.1.txt setB_0.1_20000.txt

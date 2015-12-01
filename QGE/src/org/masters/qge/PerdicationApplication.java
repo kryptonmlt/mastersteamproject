@@ -1,6 +1,5 @@
 package org.masters.qge;
 
-import java.awt.List;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -9,27 +8,30 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import org.masters.qge.clustering.ART;
-import org.masters.qge.clustering.Clustering;
-import org.masters.qge.clustering.OnlineKmeans;
 import org.masters.qge.utils.VectorFunctions;
 
 public class PerdicationApplication {
 
-	public static void main(String[] args) throws IOException {
+	/**
+	 * Using query and average data centroids this program predicts the output
+	 * of a dataset. Then calculates the error.
+	 * 
+	 * @param args
+	 * @throws Exception
+	 */
+	public static void main(String[] args) throws Exception {
 
-		int k = 10;
-		float alpha = 0.05f;
-		float row = 0.1f;
+		if (args.length != 2) {
+			throw new Exception("2 arguments needed: DataMap file, Test dataset");
+		}
 
 		BufferedReader dataMapReader = new BufferedReader(new FileReader(args[0]));
 		String temp = null;
-		Clustering queryOnline = new OnlineKmeans(k, alpha);
-		Clustering avgDataArt = new ART(row, alpha);
 
 		ArrayList<float[]> queryCentroids = new ArrayList<float[]>();
 		ArrayList<float[]> avgDataCentroids = new ArrayList<float[]>();
-		// initialize the clustering
+
+		// read the query and average data centroids
 		while ((temp = dataMapReader.readLine()) != null) {
 			String[] queryAvgData = temp.split(";");
 			String[] queryCentroid = queryAvgData[0].split(",");
@@ -42,8 +44,6 @@ public class PerdicationApplication {
 			avgDataCentroids.add(aD);
 		}
 		dataMapReader.close();
-		queryOnline.setCentroids(queryCentroids);
-		avgDataArt.setCentroids(avgDataCentroids);
 
 		// read set B and evaluate
 		BufferedReader setBReader = new BufferedReader(new FileReader(args[1]));
@@ -52,14 +52,16 @@ public class PerdicationApplication {
 		float error = 0;
 		int count = 0;
 		while ((temp = setBReader.readLine()) != null) {
+			// read query and actual output
 			String[] queryAvgData = temp.split(";");
 			float[] query = convertToFloatArray(queryAvgData[0].split(","));
 			float[] actualXBar = convertToFloatArray(queryAvgData[1].split(","));
 
-			// Integer queryClusterId = queryOnline.update(queryCentroid);
-			Integer queryClusterId = VectorFunctions.classify(query, queryOnline.getCentroids());
-			float[] predictedXBar = avgDataArt.getCentroids().get(queryClusterId);
+			// predict the output
+			Integer queryClusterId = VectorFunctions.classify(query, queryCentroids);
+			float[] predictedXBar = avgDataCentroids.get(queryClusterId);
 
+			// calculate the error
 			float e = VectorFunctions.distance(actualXBar, predictedXBar);
 			error += e;
 			count++;
@@ -73,6 +75,16 @@ public class PerdicationApplication {
 		resultWriter.close();
 	}
 
+	/**
+	 * Write float[] to writers in correct format.
+	 * 
+	 * @param bw
+	 * @param query
+	 * @param actualAVG
+	 * @param predictedAVG
+	 * @param error
+	 * @throws IOException
+	 */
 	private static void writeToBufferedWriter(BufferedWriter bw, float[] query, float[] actualAVG, float[] predictedAVG,
 			float error) throws IOException {
 		bw.write(Arrays.toString(query).replace("]", "").replace("[", "") + ";"
@@ -80,6 +92,12 @@ public class PerdicationApplication {
 				+ Arrays.toString(predictedAVG).replace("]", "").replace("[", "") + ";" + error + "\n");
 	}
 
+	/**
+	 * Convert string[] to float[]
+	 * 
+	 * @param s
+	 * @return
+	 */
 	private static float[] convertToFloatArray(String[] s) {
 		float[] f = new float[s.length];
 		for (int i = 0; i < s.length; i++) {

@@ -6,16 +6,13 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.masters.qge.storage.Data;
-
 public class Application {
 
 	/**
 	 * 6 arguments required: 1) path to input data file 2) theta value in float
 	 * 3) M representing query limit 4) K number of clusters in online kmeans
-	 * for query clustering 5) alpha which is the learning rate in online kmeans
-	 * for query clustering 6) L file which contains subspaces in format
-	 * x,y,z,...,width etc...
+	 * for query clustering 5) alpha which is the learning rate 6) L file which
+	 * contains subspaces in format x,y,z,...,width etc...
 	 * 
 	 * @param args
 	 * @throws Exception
@@ -29,7 +26,7 @@ public class Application {
 
 		// read file and populate DataSet
 		boolean completed = false;
-		List<Data> dataSet = new ArrayList<Data>();
+		List<float[]> dataSet = new ArrayList<float[]>();
 
 		File dataFile = new File(args[0]);
 		if (!dataFile.exists()) {
@@ -44,7 +41,7 @@ public class Application {
 				for (int i = 0; i < d.length; i++) {
 					row[i] = Float.parseFloat(d[i].trim());
 				}
-				dataSet.add(new Data(row));
+				dataSet.add(row);
 			}
 			completed = true;
 		} finally {
@@ -58,25 +55,36 @@ public class Application {
 			String temp = null;
 			while ((temp = lReader.readLine()) != null) {
 				String[] points = temp.split(",");
-				float[] r = new float[3];
+				float[] r = new float[points.length];
 				for (int i = 0; i < points.length; i++) {
 					r[i] = Float.parseFloat(points[i]);
 				}
 				lPoints.add(r);
 			}
 			lReader.close();
+		} else {
+			// if L file is not present add 0,0,.. as subspace with width 0.5
+			float[] f = new float[dataSet.get(0).length];
+			for (int i = 0; i < f.length; i++) {
+				if (i < f.length - 1) {
+					f[i] = 0f;
+				} else {
+					f[i] = 0.5f;
+				}
+			}
+			lPoints.add(f);
 		}
 
 		// completed is true only if no errors where encountered when reading
 		// the data file.
 		if (completed) {
 			// variables for query generation
-			float theta = 0.0f;
+			float theta = 0.01f;
 			int queryLimit = 0;
-			int k = lPoints.isEmpty() ? 1 : lPoints.size();
+			int k = lPoints.size();
 			float alpha = 0.05f;
-			float row = 0.1f;
-			int noOfAxis = dataSet.get(0).getRow().length;
+			float row = theta;
+			int noOfAxis = dataSet.get(0).length;
 
 			try {// read from commandline
 				theta = Float.parseFloat(args[1]);
@@ -97,12 +105,6 @@ public class Application {
 
 			// query generation
 			QueryGE qGE = new QueryGE();
-			// List<Data> queries = qGE.generateQueries(queryLimit, lPoints,
-			// noOfAxis, k, alpha, theta);
-			// qGE.saveQueries(queries, theta, queryLimit);
-			// List<Data> avgData = qGE.generateAVGPoints(dataSet, queries,
-			// theta, row, alpha);
-			// qGE.saveAvgData(avgData, theta, queryLimit);
 			qGE.generateAndRunQueries(queryLimit, lPoints, noOfAxis, k, alpha, theta, dataSet, row);
 		} else {
 			System.out.println("Please fix input file...");
