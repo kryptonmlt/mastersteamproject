@@ -28,11 +28,13 @@ The abstract goes here
 %==============================================================================
 \chapter{Introduction}
 \label{intro}
-
+define aqp \cite{aggqueryprocessing}
 %==============================================================================
 \chapter{Related work}
 \label{relatedWork}
-The general approach in learning a large multi-dimensional dataset is to investigate the dataset as a whole and estimate the probability density function. G.Cormode et al. in \cite{Synopses} describes the well established techniques used in generating an 
+The general approach in learning a large multi-dimensional dataset is to investigate the dataset as a whole and estimate the probability density function. G.Cormode et al. in \cite{Synopses} describes the well established techniques used in aggregate query processing. They mention histograms, self tuning histograms, sketches, sampling and wavelets. As C.Anagnostopoulos and P.Triantafillou argue in \cite{learningCount} these techniques assume that they have access to the actual data set, thus can store and preserve the statistical model created. For example to be kept up to date, histograms need to scan all the data. On the other hand Self-tuning histograms execute additional queries to adjust the statistical model accordingly.
+
+As the dataset increases in size, traditional histograms fail to scale well due to the fact that they regularly need to be rebuilt to update the statistical model creating a substantial overhead. It is then noted that the statistical models created by histograms only consider the data distribution without taking into consideration the query pattern of users.\cite{learningCount} Thus, 
 
 %==============================================================================
 \chapter{Design \& Implementation}
@@ -60,7 +62,7 @@ Therefore, $x^t$ is represented by $m_i$ with an error proportional to the Eucli
 \begin{equation}
 m_i=\dfrac{\sum_t b_i^t x^t}{\sum_t b_i^t}.
 \end{equation}
-The algorithm terminates if any of the \textit{codebook vectors} $m_i$ hasn't been changed during the update step. Upon termination the function returns the \textit{codebook verctors}.
+The algorithm terminates if any of the \textit{codebook vectors} $m_i$ hasn't been changed during the update step. Upon termination the function returns the \textit{codebook verctors}\cite{Clustering}.
 
 \subsubsection{Implementation}
 The Batch K-Means was implemented in Java. The Cluster class has two objects, an \textit{ArrayList} of \textit{points} representing all the points belonging to the cluster, and a \textit{centroid}, the \textit{codebook vector}.
@@ -80,7 +82,7 @@ i \longleftarrow arg min_j \parallel x^t - m_j \parallel
 \begin{equation}
 m_i \longleftarrow m_i + \eta (x^t - m_i)
 \end{equation}
-until $m_i$ converge.
+until $m_i$ converge \cite{Clustering}.
 
 \subsubsection{Implementation}
 The Online K-means was implemented in Java as well. The update method is presented below:
@@ -114,5 +116,5 @@ The class Tools defines a set of multi dimensional operations like the Euclidean
 
 %==============================================================================
 \bibliographystyle{plain}
-\bibliography{example}
+\bibliography{example.bib}
 \end{document}
