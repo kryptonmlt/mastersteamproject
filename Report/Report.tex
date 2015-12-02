@@ -1,0 +1,118 @@
+% This example is a LaTeX document showing how to use the lmproj class to
+% write your report. The chapter headings are by no means prescriptive. Instead
+% use an appropriate report structure for your project as you see fit.
+% Use pdflatex and bibtex to process the file, creating a PDF file as output 
+% (there is no need to use dvips when using pdflatex).
+
+% Modified 
+
+\documentclass{lmproj}
+\usepackage{amsmath}
+\usepackage{listings}
+\begin{document}
+\title{Large-Scale Learning: Query-driven Machine Learning over Distributed Data}
+\author{Kurt Portelli \\
+        Natascha Harth \\
+        Ruben Giaquinta \\
+        Xu Zhang \\
+        Monica Gandhi}
+\date{1 December 2015}
+\maketitle
+\begin{abstract}
+
+The abstract goes here
+
+\end{abstract}
+\educationalconsent
+\tableofcontents
+%==============================================================================
+\chapter{Introduction}
+\label{intro}
+
+%==============================================================================
+\chapter{Related work}
+\label{relatedWork}
+The general approach in learning a large multi-dimensional dataset is to investigate the dataset as a whole and estimate the probability density function. G.Cormode et al. in \cite{Synopses} describes the well established techniques used in generating an 
+
+%==============================================================================
+\chapter{Design \& Implementation}
+\label{design}
+
+\section{Clustering}
+
+\subsection{Nearest Neighbour - Average Data}
+
+\subsection{Offline K-Means}
+\subsubsection{The Algorithm}
+Batch K-Means is the oldest and most simple clustering method; it is however very efficient. The algorithm, given a finite data set of d-dimensional vectors $X=\{x^t\}_{t=1}^{N}$ and $k$ \textit{centroids}, or \textit{codebook vectors}, $m_j,j=1,...,k$, partitions the data set into $k$ clusters in order to minimize the so called total \textit{reconstruction error}, defined as follows:
+\begin{equation}
+E(\{m_i\}^k_{i=1}|X)=\underset{t}{\sum}\underset{i}{\sum}b_i^t
+\end{equation}
+where
+\begin{equation}
+b_i^t=
+\begin{cases}
+1 & if \parallel x^t -m_i \parallel = min_j \parallel x^t - m_j \parallel \\
+0 & otherwise.
+\end{cases}
+\end{equation}
+Therefore, $x^t$ is represented by $m_i$ with an error proportional to the Euclidean distance $\parallel x^t - m_j \parallel$. The procedure starts initializing $m_i$ randomly; at each iteration $b_i^t$ is calculated for all $x^t$ and $m_i$ are updated according to the following rule:
+\begin{equation}
+m_i=\dfrac{\sum_t b_i^t x^t}{\sum_t b_i^t}.
+\end{equation}
+The algorithm terminates if any of the \textit{codebook vectors} $m_i$ hasn't been changed during the update step. Upon termination the function returns the \textit{codebook verctors}.
+
+\subsubsection{Implementation}
+The Batch K-Means was implemented in Java. The Cluster class has two objects, an \textit{ArrayList} of \textit{points} representing all the points belonging to the cluster, and a \textit{centroid}, the \textit{codebook vector}.
+The update function searches for the nearest \textit{codebook vector}.
+\lstinputlisting[language=Java, basicstyle=\tiny, firstline=58,lastline=76]{OfflineKmeansN.java}
+At a later stage the method applies the update rule for each of the \textit{codebook vectors}, counting the number of updated \textit{centroids}.
+\lstinputlisting[language=Java, basicstyle=\tiny, firstline=78,lastline=120]{OfflineKmeansN.java}
+The function terminates if the value of the variable counting the number of modified centroids is equal to the number of clusters $counter == Clusters.size()$.
+
+
+\subsection{Online K-Means}
+\subsubsection{The Algorithm}
+The Batch K-Means cannot, or at least not efficiently, deal with huge data sets. Storing a vast amount of data in internal memory can be a serious issue. In order to avoid this problem, Online K-Means does not store input data. Therefore, the algorithm initialize $k$ random \textit{codebook vectors} $m_j,j=1,...,k$ from the training set $X$. For all $x^t \in X$, randomly chosen, the update function computes:  
+\begin{equation}
+i \longleftarrow arg min_j \parallel x^t - m_j \parallel
+\end{equation}
+\begin{equation}
+m_i \longleftarrow m_i + \eta (x^t - m_i)
+\end{equation}
+until $m_i$ converge.
+
+\subsubsection{Implementation}
+The Online K-means was implemented in Java as well. The update method is presented below:
+\lstinputlisting[language=Java, basicstyle=\tiny, firstline=23,lastline=40]{OnlineKmeans.java}
+The class Tools defines a set of multi dimensional operations like the Euclidean distance, addition, subtraction and multiplication, and finally a method to find the minimum value. 
+\lstinputlisting[language=Java, basicstyle=\tiny, firstline=11,lastline=31]{Tools.java}
+
+\subsection{ART}
+\subsection{Silhouette}
+
+\section{Query Space Clustering}
+\subsection{L interest points}
+\subsection{Gaussian distribution}
+
+\section{Prediction}
+\subsection{Mapping Query clusters to data clusters}
+\subsection{Learning algorithm}
+\subsection{Prediction algorithm}
+
+%==============================================================================
+\chapter{Evaluation}
+
+
+%==============================================================================
+\chapter{Conclusion}
+
+
+%==============================================================================
+\section{Contributions}
+
+
+%==============================================================================
+\bibliographystyle{plain}
+\bibliography{example}
+\end{document}
