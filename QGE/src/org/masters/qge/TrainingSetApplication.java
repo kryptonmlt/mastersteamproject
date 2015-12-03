@@ -6,7 +6,9 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Application {
+import org.masters.qge.querygeneration.QueryGE;
+
+public class TrainingSetApplication {
 
 	/**
 	 * 6 arguments required: 1) path to input data file 2) theta value in float
@@ -21,7 +23,7 @@ public class Application {
 
 		if (args.length < 3) {
 			throw new IllegalArgumentException(
-					"6 arguments required: 1) path to input data file. 2) theta value in float 3) integer representing query limit 4) K 5) alpha 6) row 7) L file");
+					"6 arguments required: 1) path to input data file. 2) theta value in float 3) integer representing query limit 4) L file");
 		}
 
 		// read file and populate DataSet
@@ -48,10 +50,10 @@ public class Application {
 			br.close();
 		}
 
-		// Read L File containing subspaces
+		// Read L File containing subspaces (user interest points)
 		List<float[]> lPoints = new ArrayList<float[]>();
-		if (args.length > 6) {
-			BufferedReader lReader = new BufferedReader(new FileReader(args[6]));
+		if (args.length > 3) {
+			BufferedReader lReader = new BufferedReader(new FileReader(args[3]));
 			String temp = null;
 			while ((temp = lReader.readLine()) != null) {
 				String[] points = temp.split(",");
@@ -81,31 +83,18 @@ public class Application {
 			// variables for query generation
 			float theta = 0.01f;
 			int queryLimit = 0;
-			int k = lPoints.size();
-			float alpha = 0.05f;
-			float row = theta;
 			int noOfAxis = dataSet.get(0).length;
 
 			try {// read from commandline
 				theta = Float.parseFloat(args[1]);
 				queryLimit = Integer.parseInt(args[2]);
-				if (args.length > 3) {
-					k = Integer.parseInt(args[3]);
-				}
-				if (args.length > 4) {
-					alpha = Float.parseFloat(args[4]);
-				}
-				if (args.length > 5) {
-					row = Float.parseFloat(args[5]);
-				}
 			} catch (Exception e) {
-				e.printStackTrace();
-				System.out.println("Theta and alpha must be a float, query limit and k an integer");
+				System.out.println("Theta must be a float, query limit must be an integer, using defaults..");
 			}
 
 			// query generation
 			QueryGE qGE = new QueryGE();
-			qGE.generateAndRunQueries(queryLimit, lPoints, noOfAxis, k, alpha, theta, dataSet, row);
+			qGE.generateTrainingSet(queryLimit, lPoints, noOfAxis, theta, dataSet);
 		} else {
 			System.out.println("Please fix input file...");
 		}

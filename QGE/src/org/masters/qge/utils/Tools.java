@@ -1,6 +1,9 @@
 package org.masters.qge.utils;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -118,5 +121,33 @@ public class Tools {
 
 	public Random getRandom() {
 		return r;
+	}
+
+	/**
+	 * Convert string[] to float[]
+	 * 
+	 * @param s
+	 * @return
+	 */
+	public float[] convertToFloatArray(String[] s) {
+		float[] f = new float[s.length];
+		for (int i = 0; i < s.length; i++) {
+			f[i] = Float.parseFloat(s[i]);
+		}
+		return f;
+	}
+
+	/**
+	 * Writes float[] to buffered writer
+	 * 
+	 * @param bw
+	 * @param query
+	 * @param avg
+	 * @throws IOException
+	 */
+	public void writeQueryAndADToWriter(BufferedWriter bw, float[] query, float[] avg) throws IOException {
+		bw.write(Arrays.toString(query).replace("]", "").replace("[", "") + ";"
+				+ Arrays.toString(avg).replace("]", "").replace("[", "") + "\n");
+		bw.flush();
 	}
 }
