@@ -57,9 +57,10 @@ Learning can easily be stopped and continued without the need to start from scra
 \label{design}
 
 \section{Clustering}
+The problem of cluster analysis consists in grouping a set of objects, the data set, in clusters (groups), according to similar features. Similarity among objects is mainly related to the concept of Euclidean distance. In this section some clustering algorithms will be presented.
 
 \subsection{Nearest Neighbour - Average Data}
-
+The Nearest Neighbour algorithm is one of the simplest methods for classification. The algorithm, given a finite set of d-dimensional vectors $X=\{x^t\}_{t=1}^{N}$, each with a class label, and a defined constant $k$, partitions the space classifying each point $x \in X$ as the majority class between the $k$ nearest neighbors. In order to find the $k$ nearest neighbors, the function calculates for each $x \in X$ the Euclidean distance between $x$ and $x'$, $\forall x' \in X$.
 \subsection{Offline K-Means}
 \subsubsection{The Algorithm}
 Batch K-Means is the oldest and most simple clustering method; it is however very efficient. The algorithm, given a finite data set of d-dimensional vectors $X=\{x^t\}_{t=1}^{N}$ and $k$ \textit{centroids}, or \textit{codebook vectors}, $m_j,j=1,...,k$, partitions the data set into $k$ clusters in order to minimize the so called total \textit{reconstruction error}, defined as follows:
@@ -103,6 +104,11 @@ until $m_i$ converge \cite{Clustering}.
 \subsubsection{Implementation}
 The Online K-means was implemented in Java as well. The update method is presented below:
 \lstinputlisting[language=Java, basicstyle=\tiny, firstline=23,lastline=40]{OnlineKmeans.java}
+The first $k$ input stream points are added as centroids; at a later stage, the \textit{classify} function is called in order to search for the nearest centroid and update it accordingly.
+The \textit{moveCentroid} method is implemented according to the rule: 
+\begin{equation}
+m_i \longleftarrow m_i + \eta (x^t - m_i).
+\end{equation}
 The class Tools defines a set of multi dimensional operations like the Euclidean distance, addition, subtraction and multiplication, and finally a method to find the minimum value. 
 \lstinputlisting[language=Java, basicstyle=\tiny, firstline=11,lastline=31]{Tools.java}
 
@@ -115,6 +121,7 @@ The class Tools defines a set of multi dimensional operations like the Euclidean
 
 \section{Prediction}
 \subsection{Mapping Query clusters to data clusters}
+
 \begin{equation}
 q=[x_1,x_2,\theta] =[\vec{x},\theta]
 \end{equation}

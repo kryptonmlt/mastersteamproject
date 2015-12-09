@@ -16,8 +16,8 @@
 \contentsline {subsection}{\numberline {3.2.2}Gaussian distribution}{9}{subsection.3.2.2}
 \contentsline {section}{\numberline {3.3}Prediction}{9}{section.3.3}
 \contentsline {subsection}{\numberline {3.3.1}Mapping Query clusters to data clusters}{9}{subsection.3.3.1}
-\contentsline {subsection}{\numberline {3.3.2}Learning algorithm}{9}{subsection.3.3.2}
-\contentsline {subsection}{\numberline {3.3.3}Prediction algorithm}{9}{subsection.3.3.3}
-\contentsline {chapter}{\numberline {4}Evaluation}{10}{chapter.4}
-\contentsline {chapter}{\numberline {5}Conclusion}{11}{chapter.5}
-\contentsline {section}{\numberline {5.1}Contributions}{11}{section.5.1}
+\contentsline {subsection}{\numberline {3.3.2}Learning algorithm}{10}{subsection.3.3.2}
+\contentsline {subsection}{\numberline {3.3.3}Prediction algorithm}{10}{subsection.3.3.3}
+\contentsline {chapter}{\numberline {4}Evaluation}{11}{chapter.4}
+\contentsline {chapter}{\numberline {5}Conclusion}{12}{chapter.5}
+\contentsline {section}{\numberline {5.1}Contributions}{12}{section.5.1}
