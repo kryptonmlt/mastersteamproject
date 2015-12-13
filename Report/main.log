@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.11.22)  9 DEC 2015 17:42
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.11.22)  13 DEC 2015 15:23
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**Report.tex
-(./Report.tex
+**main.tex
+(./main.tex
 LaTeX2e <2015/01/01>
 Babel <3.9l> and hyphenation patterns for 79 languages loaded.
 (./lmproj.cls
@@ -265,8 +265,8 @@ File: listings.cfg 2014/09/06 1.5e listings configuration
 ))
 Package: listings 2014/09/06 1.5e (Carsten Heinz)
 
-(./Report.aux)
-\openout1 = `Report.aux'.
+No file main.aux.
+\openout1 = `main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 12.
 LaTeX Font Info:    ... okay on input line 12.
@@ -283,7 +283,7 @@ LaTeX Font Info:    ... okay on input line 12.
 LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 12.
 LaTeX Font Info:    ... okay on input line 12.
 LaTeX Font Info:    Try loading font information for OT1+ptm on input line 12.
- (/usr/local/texlive/2015/texmf-dist/tex/latex/psnfss/ot1ptm.fd
+(/usr/local/texlive/2015/texmf-dist/tex/latex/psnfss/ot1ptm.fd
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 )
 (/usr/local/texlive/2015/texmf-dist/tex/context/base/supp-pdf.mkii
@@ -337,14 +337,12 @@ Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 LaTeX Info: Redefining \ref on input line 12.
 LaTeX Info: Redefining \pageref on input line 12.
 LaTeX Info: Redefining \nameref on input line 12.
-
-(./Report.out) (./Report.out)
 \@outlinefile=\write3
-\openout3 = `Report.out'.
+\openout3 = `main.out'.
 
 \c@lstlisting=\count126
 
-<images/CompSci_mono.pdf, id=80, 340.27126pt x 49.18375pt>
+<images/CompSci_mono.pdf, id=4, 340.27126pt x 49.18375pt>
 File: images/CompSci_mono.pdf Graphic file (type pdf)
 
 <use images/CompSci_mono.pdf>
@@ -372,9 +370,8 @@ l.26 \tableofcontents
                       [1]
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <24.88> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 26.
- (./Report.toc)
 \tf@toc=\write4
-\openout4 = `Report.toc'.
+\openout4 = `main.toc'.
 
  [2
 
@@ -402,20 +399,49 @@ LaTeX Warning: Citation `LearningDNN' on page 3 undefined on input line 34.
 ]
 Chapter 2.
 
+LaTeX Warning: Citation `Synopses' on page 4 undefined on input line 41.
+
+
+LaTeX Warning: Citation `learningCount' on page 4 undefined on input line 41.
+
+
 LaTeX Warning: Citation `Genhist' on page 4 undefined on input line 43.
 
 
 LaTeX Warning: Citation `Genhist' on page 4 undefined on input line 43.
+
+
+LaTeX Warning: Citation `learningCount' on page 4 undefined on input line 45.
+
+
+LaTeX Warning: Citation `learningCount' on page 4 undefined on input line 45.
+
+
+LaTeX Warning: Citation `learningCount' on page 4 undefined on input line 47.
 
 [4
 
-] [5]
+]
+
+LaTeX Warning: Citation `learningCount' on page 5 undefined on input line 49.
+
+
+LaTeX Warning: Citation `learningCount' on page 5 undefined on input line 51.
+
+
+LaTeX Warning: Citation `learningCount' on page 5 undefined on input line 53.
+
+[5]
 Chapter 3.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 62.
 [6
 
-] (/usr/local/texlive/2015/texmf-dist/tex/latex/listings/lstlang1.sty
+]
+
+LaTeX Warning: Citation `Clustering' on page 7 undefined on input line 82.
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2014/09/06 1.5e listings language file
 )
 Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on i
@@ -439,48 +465,138 @@ File: omsptm.fd
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <6> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 58.
 )
-(./OfflineKmeansN.java [7]) (./OnlineKmeans.java) (./Tools.java [8]) [9]
-[10]
-Chapter 4.
-[11
+(./OfflineKmeansN.java [7])
 
-]
-Chapter 5.
-(./Report.bbl [12
+LaTeX Warning: Citation `Clustering' on page 8 undefined on input line 102.
 
-]
-Missing character: There is no Ä in font ptmr7t!
-Missing character: There is no ± in font ptmr7t!
-Missing character: There is no Â in font ptmri7t!
-Missing character: There is no ® in font ptmri7t!
+(./OnlineKmeans.java) (./Tools.java [8]
+LaTeX Font Info:    Font shape `OMS/ptm/m/it' in size <6> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 23.
+)
+Missing character: There is no â in font ptmr7t!
+Missing character: There is no € in font ptmr7t!
+Missing character: There is no ˜ in font ptmr7t!
+Missing character: There is no â in font ptmr7t!
+Missing character: There is no € in font ptmr7t!
+Missing character: There is no ™ in font ptmr7t!
+Missing character: There is no â in font cmr10!
+Missing character: There is no ˆ in font cmr10!
+Missing character: There is no ¥ in font cmr10!
 Missing character: There is no â in font ptmr7t!
 Missing character: There is no € in font ptmr7t!
 Missing character: There is no “ in font ptmr7t!
+ (./ART.java [9])
+Missing character: There is no â in font ptmr7t!
+Missing character: There is no € in font ptmr7t!
+Missing character: There is no ™ in font ptmr7t!
+
+Overfull \hbox (24.31674pt too wide) in paragraph at lines 162--163
+\OT1/ptm/m/n/10.95 The sil-hou-ette al-go-rithm has been im-ple-mented in MAT-L
+AB us-ing the func-tion sil-hou-ette(X,clust,metric)
+ []
+
+Missing character: There is no â in font ptmr7t!
+Missing character: There is no € in font ptmr7t!
+Missing character: There is no ˜ in font ptmr7t!
+Missing character: There is no â in font ptmr7t!
+Missing character: There is no € in font ptmr7t!
+Missing character: There is no ™ in font ptmr7t!
+Missing character: There is no â in font ptmr7t!
+Missing character: There is no € in font ptmr7t!
+Missing character: There is no ˜ in font ptmr7t!
+Missing character: There is no â in font ptmr7t!
+Missing character: There is no € in font ptmr7t!
+Missing character: There is no ™ in font ptmr7t!
+[10] (/usr/local/texlive/2015/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2014/09/06 1.5e listings language file
 )
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 167.
- [13
+(./Silhouette.m)
+Missing character: There is no â in font ptmr7t!
+Missing character: There is no € in font ptmr7t!
+Missing character: There is no ˜ in font ptmr7t!
+Missing character: There is no â in font ptmr7t!
+Missing character: There is no € in font ptmr7t!
+Missing character: There is no ™ in font ptmr7t!
+ [11] (./Tools.java) [12] [13]
+
+LaTeX Warning: Reference `fig:Query' on page 14 undefined on input line 230.
+
+<Query.PNG, id=276, 345.08925pt x 280.04625pt>
+File: Query.PNG Graphic file (type png)
+ <use Query.PNG>
+Package pdftex.def Info: Query.PNG used on input line 233.
+(pdftex.def)             Requested size: 259.36462pt x 210.49138pt.
+ [14
+
+ <./Query.PNG>] (./QueryGE.java
+Overfull \hbox (10.53452pt too wide) in paragraph at lines 50--51
+[][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (42.93484pt too wide) in paragraph at lines 53--54
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
+][][] 
+ []
+
+
+Overfull \hbox (14.13455pt too wide) in paragraph at lines 56--57
+[][][][][][][][][][][][][][][][][][] 
+ []
+
+) (./LearningApplication.java) [15] (./LearningApplication.java)
+(./LearningApplication.java
+Overfull \hbox (35.73477pt too wide) in paragraph at lines 75--76
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
+][][][] 
+ []
+
+
+Overfull \hbox (46.53488pt too wide) in paragraph at lines 78--79
+[][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+) (./PredictionApplication.java) [16] (./PredictionApplication.java)
+(./PredictionApplication.java) (./PredictionApplication.java) [17]
+Chapter 4.
+[18
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 167.
- (./Report.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 167.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 167.
-Package rerunfilecheck Info: File `Report.out' has not changed.
-(rerunfilecheck)             Checksum: 25E7801966F86D934828F511966AEA7F;1213.
+Chapter 5.
+No file main.bbl.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 333.
+[19
 
+]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 333.
+ (./main.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 333.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 333.
+
+
+Package rerunfilecheck Warning: File `main.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `main.out':
+(rerunfilecheck)             Before: <no file>
+(rerunfilecheck)             After:  D0CA0871DE53DC0D25F53A74E1535E12;1525.
 
 LaTeX Warning: There were undefined references.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 167.
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 333.
  ) 
 Here is how much of TeX's memory you used:
- 7344 strings out of 493089
- 107091 string characters out of 6134841
- 249454 words of memory out of 5000000
- 10565 multiletter control sequences out of 15000+600000
+ 8068 strings out of 493089
+ 116060 string characters out of 6134841
+ 259331 words of memory out of 5000000
+ 11146 multiletter control sequences out of 15000+600000
  30480 words of font info for 59 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 36i,7n,43p,1216b,1692s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 36i,8n,43p,1214b,1692s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
 exlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/te
 xlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/tex
@@ -494,10 +610,10 @@ xmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2015/texm
 f-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2015/texmf-dist/fon
 ts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/u
 rw/times/utmri8a.pfb>
-Output written on Report.pdf (15 pages, 171329 bytes).
+Output written on main.pdf (21 pages, 210971 bytes).
 PDF statistics:
- 393 PDF objects out of 1000 (max. 8388607)
- 359 compressed objects within 4 object streams
- 162 named destinations out of 1000 (max. 500000)
- 158 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 476 PDF objects out of 1000 (max. 8388607)
+ 433 compressed objects within 5 object streams
+ 283 named destinations out of 1000 (max. 500000)
+ 11 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -75,22 +75,19 @@ this declaration, but doing so would help future students.}
 \begin{tabular}{@{}llll}
       &                     &            &                     \\
       &                     &            &                     \\
-Name: & \rule{4.0cm}{0.5mm} & Signature: & \rule{4.5cm}{0.5mm} \\
+Name: & Kurt Portelli & Signature: & K.Portelli \\
       &                     &            &                     \\
       &                     &            &                     \\
-Name: & \rule{4.0cm}{0.5mm} & Signature: & \rule{4.5cm}{0.5mm} \\
+Name: & Natascha Harth & Signature: & N.Harth \\
       &                     &            &                     \\
       &                     &            &                     \\
-Name: & \rule{4.0cm}{0.5mm} & Signature: & \rule{4.5cm}{0.5mm} \\
+Name: & Ruben Giaquinta & Signature: & R.Giaquinta \\
       &                     &            &                     \\
       &                     &            &                     \\
-Name: & \rule{4.0cm}{0.5mm} & Signature: & \rule{4.5cm}{0.5mm} \\
+Name: & Xu Zhang & Signature: & X.Zhang \\
       &                     &            &                     \\
       &                     &            &                     \\
-Name: & \rule{4.0cm}{0.5mm} & Signature: & \rule{4.5cm}{0.5mm} \\
-      &                     &            &                     \\
-      &                     &            &                     \\
-Name: & \rule{4.0cm}{0.5mm} & Signature: & \rule{4.5cm}{0.5mm} \\
+Name: & Monica Gandhi & Signature: & M.Gandhi \\
 \end{tabular}
 }
 
