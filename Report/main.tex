@@ -114,9 +114,9 @@ The class Tools defines a set of multi dimensional operations like the Euclidean
 
 \subsection{ART}
 \subsubsection{The Algorithm}
-Adaptive Resonance Theory (ART) is a competitive learning algorithm used in neural networks. It is an incremental approach, where it starts with one cluster and adds other clusters as needed. ART does not require the number of clusters to be specified, instead it requires a ‘vigilance’ value using which the clusters are created.
+Adaptive Resonance Theory (ART) is a competitive learning algorithm used in neural networks. The algorithm follows an incremental approach, initializing just one centroid and adding other centroids as needed. ART does not require the number of clusters to be specified, instead it requires a \textit{vigilance} in order to create new centroids.
 
-In ART, initially the first point is chosen as the centroid for the first cluster. When the distance between the data point and its nearest cluster center is less than the vigilance, then the update is done as in the usual Online KMeans. But if the distance is greater than the vigilance, then a new cluster is created with that point as the cluster center.
+In ART, initially the first input point is chosen as the centroid for the first cluster. When the Euclidean distance between the data point and its nearest centroid is less than the vigilance, then the update is calculated as in Online K-Means. However, if the distance is greater than the vigilance, then a new cluster is created with that point as a centroid.
 
 For the data set $X = \left\{ {x^{t}}\right\}_{t=1}^N$, the following equations are performed for each update:
 \begin{equation}
@@ -130,14 +130,20 @@ m_{k+1}\leftarrow x^{t} & if b_{i}>\rho
 \end{cases}
 \end{equation}
 
-$m_{i}$ is the initial cluster center, $\rho$ is the vigilance value specified by the user and $b_{i}$ is the minimum distance of the point to its nearest cluster center. 
+$m_{i}$ is the initial cluster center, $\rho$ is the vigilance value specified by the user and $b_{i}$ is the minimum distance of the point to its nearest cluster center \cite{Clustering}. 
  
 \subsubsection{Implementation}
-The ART algorithm has been implemented in Java and includes two main classes - ART and Application. The program requires three arguments as input – the path to the text file containing the data points, the vigilance value and the alpha learning value. 
-The ART class has the update function which updates the clusters or adds new clusters depending on the vigilance value.
+The ART algorithm has been implemented in Java and includes three classes: \textit{ART}, \textit{Application} and \textit{Tools}. The Application class requires the text file containing the data points, the vigilance value and the alpha learning value as input while the \textit{Tools} class contains a set of multidimensional operations.
+
+The ART class implements the \textit{update} function as per the equations 3.7 and 3.8 for each input data point. The variable \textit{row} is the user input vigilance value and \textit{point} is the next incoming data point. \textit{Tools.distance(point, centroids.get(nearestCentroid))} gives the minimum distance of the point to its nearest cluster center.
+
 \lstinputlisting[language=Java, basicstyle=\tiny, firstline=21,lastline=39]{ART.java}
 
-The Application class produces the output in two different text files - one containing all the centroids of the cluster and the other file containing the cluster ids of each data point.
+If the distance between the point and the nearest centroid is less than the vigilance value, the method invokes the \textit{moveCentroid} function which adds the point to the cluster and updates the centroid.
+
+\lstinputlisting[language=Java, basicstyle=\tiny, firstline=40,lastline=45]{ART.java}
+
+The output is obtained in two different text files, one containing all the centroids of the cluster and the other file containing the cluster ids of each data point.
 
 \subsection{Silhouette}
 \subsubsection{The Algorithm}
@@ -153,20 +159,20 @@ s(i) = \begin{cases}
 \\b(i)/a(i) -1 & if a(i)>b(i)
 \end{cases}
 \end{equation}
-where a(i) is the average distance from the $i^{th}$ point to the other points in the same cluster as i and b(i) is the minimum average distance from the $i^{th}$ point to points in a different cluster.
+where a(i) is the average distance from the $i^{th}$ point to the other points in the same cluster and b(i) is the minimum average distance from the $i^{th}$ point to points in a different cluster \cite{Rousseeuw}.
 
-The values of a silhouette coefficient usually ranges from -1 to 1. If the value is closer to 1, it means that the point is in the right cluster. If it is closer to 0, then the point lies near the decision boundary of two neighboring clusters. And if s(i) has negative values, it means that the point is in the wrong cluster.
+The values $s(i)$ of a silhouette coefficient usually ranges from $-1$ to $1$. If $s(i)$ is close to 1, it means that the point is in the right cluster. If $s(i)$ is close to zero, then the point lies near the decision boundary of two neighboring clusters. Otherwise, if $s(i)$ has negative values, it means that the point is in the wrong cluster.
 
 The average silhouette values of all the points in the cluster is used to determine the quality of the clustering method used. Hence, the optimal number of clusters for an efficient clustering would be the number of clusters that gives the highest silhouette coefficient.
 \subsubsection{Implementation}
-The silhouette algorithm has been implemented in MATLAB using the function silhouette(X,clust,metric) where X is the matrix of data points, clust is the cluster ids’ of each data point and metric is the inter-point distance function used. 
+The silhouette algorithm has been implemented in MATLAB using the function \textit{silhouette(X,clust,metric)} where X is the matrix of data points, \textit{clust} is the cluster \textit{ids} of each data point and metric is the inter-point distance function used. 
 
-The variable ‘data’ is the path to the text file containing the data points and variable ‘kmeans’ is the path to the text file containing their corresponding cluster numbers. The metric we used is the Euclidean distance between the points.
+The variable \textit{data} is the path to the text file containing the data points while the variable \textit{kmeans} is the path to the text file containing their corresponding cluster numbers. The metric we used is the Euclidean distance between the points.
 
 \lstinputlisting[language=Matlab, basicstyle=\tiny]{Silhouette.m}
 The above program gives the mean Silhouette coefficient of the overall points in the cluster.
 
-\section{Query Space Clustering (haven't done)}
+\section{Query Space Clustering}
 
 The Online K-Means described at 3.1.3 provides an efficient approach to address huge data sets without accessing raw data. However, it is easily to notice that the input of Online K-Means (i.e., the output of queries) is randomly and uniformly chosen. This is obviously unreasonable. Thus, the challenge here is that how to generate an appropriate input for Online K-Means. Before exploring the specific solution, it is necessary to give a definition for query and explain the generation of a query. 
 
@@ -175,20 +181,29 @@ The Online K-Means described at 3.1.3 provides an efficient approach to address 
 A query Q has two parts: the input of the query, which called query-point, X and the radius THETA, where X is a multidimensional vector from the real dataset and THETA is the ‘radius’ with a constant value. 
 
 \begin{equation}
-	q =[\vec{x},\theta] =[x_1,x_2,...,x_n,\theta] (n dimensions)
+	q =[\vec{x},\theta] =[x_1,x_2,...,x_n,\theta] (n-dimension)
 \end{equation}
 
 For example, consider dealing with a dataset S with two-dimensional points. The query-point is X=[X1, X2]. In the Online K-Means mentioned before, the values of X1 and X2 are chosen uniformly and randomly from S. The next step is to scan ALL the data and gather all data points Z, for instance, Z = [Z1, Z2] such that the Euclidean distance between Z and the query-point X is less than THETA. Subsequently, record the average of all Z points that satisfy the criterion: less than THETA, and notate this as the output of a query. Finally, if there are M queries, repeat this process of query generation for M times and save all the output as the input for Online K-Means. 
 
 \subsubsection{Implementation}
+The original query generation was implemented in Java. The methods are shown below:
 
+\lstinputlisting[language=Java, basicstyle=\tiny, firstline=49,lastline=60]{OriginalTools.java}
+
+This function is used to generate a set of queries randomly with two parameters: int queryLimit (i.e., M queries) and int noOfAxis (i.e., the dimensions of points). r.nextFloat() will return the next uniformly distributed float value between 0.0 and 1.0 and then minus 0.5 simply because the range of dataset in this case is from -0.5 to 0.5.
+
+\lstinputlisting[language=Java, basicstyle=\tiny, firstline=25,lastline=30]{OriginalTools.java}
+\lstinputlisting[language=Java, basicstyle=\tiny, firstline=15,lastline=21]{OriginalTools.java}
+The loop scan all dataset to find all points Z that the distance less than THETA and then search the center of Z. Tools.distance() can calculate the Euclidean distance between two points.
+\lstinputlisting[language=Java, basicstyle=\tiny, firstline=33,lastline=47]{OriginalTools.java}
+The idea here is that using a loop to count the sum of Z for each dimension and then compute the mean value for each dimension.
 
 However, the original idea of query generation has two limitations. Firstly, as mentioned above, users is less likely to issue queries from the whole dataset uniformly and randomly. Another problem is that this method needs to scan whole dataset to find all the points that the distance less than THETA. It is likely to increase a heavy load and cost especially when addressing a large-scale dataset. Query Space Quantization (i.e., Query Space Clustering) is proposed to solve these problems. 
 
 \subsection{Pre-define Data Subspaces by Interest Points}
 To begin with, it is necessary to pre-define some data subspaces in order to simulate the areas of interest of a user. Assume that there are L = 10 subspaces in a 2-dimensional dataset. That is, the user normally issues queries from L data subspaces. More specifically, fix a data subspace, say subspace J, J = 1, ..., L. The subspace J is modelled through a Gaussian distribution of 2 dimensions, i.e., a mean value M1 for dimension X1 and a mean value M2 for dimension X2 are needed. Furthermore, for simplicity, assume that the variances V1 and V2 for dimensions X1 and X2 are the same and fixed, e.g., V1 = V2 = 0.01. 
 
-\subsubsection{Implementation}
 
 \subsection{Select a Subspace and Generate a Query}
 Secondly, assume that there is a need to generate N = 10000 queries from L = 10 subspaces. That is, a subspace J is firstly chosen from 1 to 10, each one with equal probability, i.e., J = Random(1,10). Then, from the J-th subspace, a query is generated as discussed above. Intuitively, 10000/10 = 1000 queries will be generated from each subspace J, J = 1...10. 
@@ -197,7 +212,40 @@ Next, to generate a query from the J-th subspace, it is necessary to set the cen
 
 \subsubsection{Implementation}
 
+\begin{minipage}[b]{0.5\linewidth}
+-0.4,0.2,0.01
+
+-0.3,-0.3,0.01
+
+-0.4,0.4,0.01
+
+0.2,0.3,0.01
+
+-0.1,-0.1,0.01
+
+0.1,-0.3,0.01
+
+-0.25,0.25,0.01
+
+0.4,0.1,0.01
+
+0,0,0.01
+
+0.2,-0.2,0.01
+
+\end{minipage}
+\hfill
+\begin{minipage}[b]{0.5\linewidth}
+	\includegraphics[height=10\baselineskip]{L.png}
+\end{minipage}
+
+The left side is a typical file format of J, i.e., M1,M2,V1(V2). The picture is the visualization for this subspace.
+
+The generation of points, which follow Gaussian distribution, was implemented in Java. The function is presented below:
 \lstinputlisting[language=Java, basicstyle=\tiny, firstline=102,lastline=117]{Tools.java}
+\lstinputlisting[language=Java, basicstyle=\tiny, firstline=10,lastline=14]{Tools.java}
+There are two parameters. Float[] point represents the center [M1, M2]. Float width means the variance V1=V2=0.01. r.nextGaussian() returns the next Gaussian distributed double value with mean 0.0 and standard deviation 1.0. And then multiplying by (width/3) enables about 99.7\% of a population will be within the range (-0.01, 0.01). Finally, moving this number towards the center X by adding the mean value M1 or M2. 
+
 
 
 
@@ -205,6 +253,17 @@ Next, to generate a query from the J-th subspace, it is necessary to set the cen
 Finally, the concept here is to address overload for large-scale dataset by avoiding storing all the queries, scanning all dataset and then calling a batch K-means. In the reality where users issuing queries, it is essential to quantize them ONLINE. That is to incrementally generate queries and then injecting each one to the incremental K-means algorithm, for quantizing the query vectors. Obviously, if K = L then after a lot of queries, you will see that ALL the K means vectors will be the vectors with dimensions (M1[J],M2[J]) since, naturally, the K-means algorithm learn the query distribution, which in our case in a L-modal Gaussian distribution, i.e., L = 10 Gaussian bells.
 
 \subsubsection{Implementation}
+
+\lstinputlisting[language=Java, basicstyle=\tiny, firstline=123,lastline=129]{QueryClustering.java}
+queryLimit in this part of loop means represents M queries. For each query, inject it to online K-Means and then get centroid. 
+
+Evaluation the similarity of the queires:
+
+Plot the K means over the space to check their positions to check the distance to the positions of the M1[J], M2[J], J = 1, ..., L. The distance between two queries is the Euclidean distance of their centers and their THETA values, i.e., Q1 = [X1, X2, THETA] and Q2 = [X1, X2, THETA]. 
+\begin{equation}
+DISTANCE (Q1, Q2) = (Q1.X1-Q2.X1)^2+(Q1.X2-Q2.X2)^2+(Q1.THETA -Q2.THETA)^2.
+\end{equation} 
+In this case, THETA is the same for all queries. This distance quantified the similarity of the queries.
 
 Further work:
 For each subspace, it is chosen from 1 to 10 with equal probability. It is a rare situation in the reality. Some probability theories and predictive methods could be involved in, such as Bayesian inference. On the other hand, for each subspace, it is modeled by Gaussian distribution. Although it is the most common distribution, some other models, such as linear regression, could also be considered. Combining with some inference theories, this can be more specific. 
@@ -317,6 +376,19 @@ Further evaluation can be done by reading the result file that will be produced 
 %==============================================================================
 \chapter{Evaluation}
 \section{Silhouette}
+For a better understanding of the impact of vigilance and theta values in ART, we tested the algorithm with different values for both variables, evaluating the average clustering results with silhouette. As we already mentioned before, silhouette algorithm computes the average result for all the clusters evaluations. It is possible to notice that the performance is proportional to theta; however, for greater vigilance values the difference in performance as theta varies becomes more negligible.
+The number of radius queries generated and executed over the original data space in order to test ART is $200.000$.
+
+ \begin{figure}[ht]
+	\centering
+	\includegraphics[width=1.1\linewidth]{thetavigilance.png}
+    \caption[ARTevaluation]{The impact of Theta and vigilance in ART}
+\end{figure}
+
+Batch and Online K-Means were tested as well with different values of $k$ ($50,150,400$) and $theta$ ($0.05,0.2$) for the queries. For K-Means functions the number of radius queries is $100.000$.
+
+
+
 \section{Error}
 %==============================================================================
 \chapter{Conclusion}

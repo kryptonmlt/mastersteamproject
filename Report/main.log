@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.11.22)  13 DEC 2015 15:23
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.11.22)  14 DEC 2015 16:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -265,7 +265,7 @@ File: listings.cfg 2014/09/06 1.5e listings configuration
 ))
 Package: listings 2014/09/06 1.5e (Carsten Heinz)
 
-No file main.aux.
+(./main.aux)
 \openout1 = `main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 12.
@@ -283,7 +283,7 @@ LaTeX Font Info:    ... okay on input line 12.
 LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 12.
 LaTeX Font Info:    ... okay on input line 12.
 LaTeX Font Info:    Try loading font information for OT1+ptm on input line 12.
-(/usr/local/texlive/2015/texmf-dist/tex/latex/psnfss/ot1ptm.fd
+ (/usr/local/texlive/2015/texmf-dist/tex/latex/psnfss/ot1ptm.fd
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 )
 (/usr/local/texlive/2015/texmf-dist/tex/context/base/supp-pdf.mkii
@@ -337,12 +337,14 @@ Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 LaTeX Info: Redefining \ref on input line 12.
 LaTeX Info: Redefining \pageref on input line 12.
 LaTeX Info: Redefining \nameref on input line 12.
+
+(./main.out) (./main.out)
 \@outlinefile=\write3
 \openout3 = `main.out'.
 
 \c@lstlisting=\count126
 
-<images/CompSci_mono.pdf, id=4, 340.27126pt x 49.18375pt>
+<images/CompSci_mono.pdf, id=96, 340.27126pt x 49.18375pt>
 File: images/CompSci_mono.pdf Graphic file (type pdf)
 
 <use images/CompSci_mono.pdf>
@@ -370,76 +372,77 @@ l.26 \tableofcontents
                       [1]
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <24.88> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 26.
+ (./main.toc [2
+
+])
 \tf@toc=\write4
 \openout4 = `main.toc'.
 
- [2
-
-]
+ [3]
 Chapter 1.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <20.74> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 28.
 
-LaTeX Warning: Citation `LargeScaleOnlineLearning' on page 3 undefined on input
+LaTeX Warning: Citation `LargeScaleOnlineLearning' on page 4 undefined on input
  line 30.
 
 
-LaTeX Warning: Citation `LargeScaleOnlineLearning' on page 3 undefined on input
+LaTeX Warning: Citation `LargeScaleOnlineLearning' on page 4 undefined on input
  line 30.
 
 
-LaTeX Warning: Citation `LargeScaleOnlineLearning' on page 3 undefined on input
+LaTeX Warning: Citation `LargeScaleOnlineLearning' on page 4 undefined on input
  line 30.
 
 
-LaTeX Warning: Citation `LearningDNN' on page 3 undefined on input line 34.
-
-[3
-
-]
-Chapter 2.
-
-LaTeX Warning: Citation `Synopses' on page 4 undefined on input line 41.
-
-
-LaTeX Warning: Citation `learningCount' on page 4 undefined on input line 41.
-
-
-LaTeX Warning: Citation `Genhist' on page 4 undefined on input line 43.
-
-
-LaTeX Warning: Citation `Genhist' on page 4 undefined on input line 43.
-
-
-LaTeX Warning: Citation `learningCount' on page 4 undefined on input line 45.
-
-
-LaTeX Warning: Citation `learningCount' on page 4 undefined on input line 45.
-
-
-LaTeX Warning: Citation `learningCount' on page 4 undefined on input line 47.
+LaTeX Warning: Citation `LearningDNN' on page 4 undefined on input line 34.
 
 [4
 
 ]
+Chapter 2.
 
-LaTeX Warning: Citation `learningCount' on page 5 undefined on input line 49.
-
-
-LaTeX Warning: Citation `learningCount' on page 5 undefined on input line 51.
+LaTeX Warning: Citation `Synopses' on page 5 undefined on input line 41.
 
 
-LaTeX Warning: Citation `learningCount' on page 5 undefined on input line 53.
+LaTeX Warning: Citation `learningCount' on page 5 undefined on input line 41.
 
-[5]
-Chapter 3.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 62.
-[6
+
+LaTeX Warning: Citation `Genhist' on page 5 undefined on input line 43.
+
+
+LaTeX Warning: Citation `Genhist' on page 5 undefined on input line 43.
+
+
+LaTeX Warning: Citation `learningCount' on page 5 undefined on input line 45.
+
+
+LaTeX Warning: Citation `learningCount' on page 5 undefined on input line 45.
+
+
+LaTeX Warning: Citation `learningCount' on page 5 undefined on input line 47.
+
+[5
 
 ]
 
-LaTeX Warning: Citation `Clustering' on page 7 undefined on input line 82.
+LaTeX Warning: Citation `learningCount' on page 6 undefined on input line 49.
+
+
+LaTeX Warning: Citation `learningCount' on page 6 undefined on input line 51.
+
+
+LaTeX Warning: Citation `learningCount' on page 6 undefined on input line 53.
+
+[6]
+Chapter 3.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 62.
+[7
+
+]
+
+LaTeX Warning: Citation `Clustering' on page 8 undefined on input line 82.
 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2014/09/06 1.5e listings language file
@@ -465,49 +468,32 @@ File: omsptm.fd
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <6> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 58.
 )
-(./OfflineKmeansN.java [7])
+(./OfflineKmeansN.java [8])
 
-LaTeX Warning: Citation `Clustering' on page 8 undefined on input line 102.
+LaTeX Warning: Citation `Clustering' on page 9 undefined on input line 102.
 
-(./OnlineKmeans.java) (./Tools.java [8]
+(./OnlineKmeans.java) (./Tools.java [9]
 LaTeX Font Info:    Font shape `OMS/ptm/m/it' in size <6> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 23.
 )
-Missing character: There is no â in font ptmr7t!
-Missing character: There is no € in font ptmr7t!
-Missing character: There is no ˜ in font ptmr7t!
-Missing character: There is no â in font ptmr7t!
-Missing character: There is no € in font ptmr7t!
-Missing character: There is no ™ in font ptmr7t!
 Missing character: There is no â in font cmr10!
 Missing character: There is no ˆ in font cmr10!
 Missing character: There is no ¥ in font cmr10!
-Missing character: There is no â in font ptmr7t!
-Missing character: There is no € in font ptmr7t!
-Missing character: There is no “ in font ptmr7t!
- (./ART.java [9])
-Missing character: There is no â in font ptmr7t!
-Missing character: There is no € in font ptmr7t!
-Missing character: There is no ™ in font ptmr7t!
 
-Overfull \hbox (24.31674pt too wide) in paragraph at lines 162--163
+
+LaTeX Warning: Citation `Clustering' on page 10 undefined on input line 133.
+
+[10] (./ART.java) (./ART.java)
+
+LaTeX Warning: Citation `Rousseeuw' on page 11 undefined on input line 162.
+
+[11]
+Overfull \hbox (23.10132pt too wide) in paragraph at lines 168--169
 \OT1/ptm/m/n/10.95 The sil-hou-ette al-go-rithm has been im-ple-mented in MAT-L
-AB us-ing the func-tion sil-hou-ette(X,clust,metric)
+AB us-ing the func-tion \OT1/ptm/m/it/10.95 sil-hou-ette(X,clust,metric)
  []
 
-Missing character: There is no â in font ptmr7t!
-Missing character: There is no € in font ptmr7t!
-Missing character: There is no ˜ in font ptmr7t!
-Missing character: There is no â in font ptmr7t!
-Missing character: There is no € in font ptmr7t!
-Missing character: There is no ™ in font ptmr7t!
-Missing character: There is no â in font ptmr7t!
-Missing character: There is no € in font ptmr7t!
-Missing character: There is no ˜ in font ptmr7t!
-Missing character: There is no â in font ptmr7t!
-Missing character: There is no € in font ptmr7t!
-Missing character: There is no ™ in font ptmr7t!
-[10] (/usr/local/texlive/2015/texmf-dist/tex/latex/listings/lstlang1.sty
+(/usr/local/texlive/2015/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2014/09/06 1.5e listings language file
 )
 (./Silhouette.m)
@@ -517,16 +503,39 @@ Missing character: There is no ˜ in font ptmr7t!
 Missing character: There is no â in font ptmr7t!
 Missing character: There is no € in font ptmr7t!
 Missing character: There is no ™ in font ptmr7t!
- [11] (./Tools.java) [12] [13]
+ [12] (./OriginalTools.java) (./OriginalTools.java)
+(./OriginalTools.java) (./OriginalTools.java) [13]
+<L.png, id=409, 508.299pt x 336.0555pt>
+File: L.png Graphic file (type png)
+ <use L.png>
+Package pdftex.def Info: L.png used on input line 239.
+(pdftex.def)             Requested size: 205.70483pt x 136.00006pt.
 
-LaTeX Warning: Reference `fig:Query' on page 14 undefined on input line 230.
+Overfull \hbox (2.0805pt too wide) in paragraph at lines 215--241
+[]  [] 
+ []
 
-<Query.PNG, id=276, 345.08925pt x 280.04625pt>
+[14 <./L.png>] (./Tools.java) (./Tools.java) (./QueryClustering.java)
+Overfull \hbox (25.41798pt too wide) detected at line 265
+\OML/cmm/m/it/10.95 DISTANCE\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 Q\OT1/cmr/m
+/n/10.95 1\OML/cmm/m/it/10.95 ; Q\OT1/cmr/m/n/10.95 2) = (\OML/cmm/m/it/10.95 Q
+\OT1/cmr/m/n/10.95 1\OML/cmm/m/it/10.95 :X\OT1/cmr/m/n/10.95 1 \OMS/cmsy/m/n/10
+.95 ^^@ \OML/cmm/m/it/10.95 Q\OT1/cmr/m/n/10.95 2\OML/cmm/m/it/10.95 :X\OT1/cmr
+/m/n/10.95 1)[] + (\OML/cmm/m/it/10.95 Q\OT1/cmr/m/n/10.95 1\OML/cmm/m/it/10.95
+ :X\OT1/cmr/m/n/10.95 2 \OMS/cmsy/m/n/10.95 ^^@ \OML/cmm/m/it/10.95 Q\OT1/cmr/m
+/n/10.95 2\OML/cmm/m/it/10.95 :X\OT1/cmr/m/n/10.95 2)[] + (\OML/cmm/m/it/10.95 
+Q\OT1/cmr/m/n/10.95 1\OML/cmm/m/it/10.95 :THETA \OMS/cmsy/m/n/10.95 ^^@ \OML/cm
+m/m/it/10.95 Q\OT1/cmr/m/n/10.95 2\OML/cmm/m/it/10.95 :THETA\OT1/cmr/m/n/10.95 
+)[]\OML/cmm/m/it/10.95 :
+ []
+
+[15] [16] <Query.PNG, id=459, 345.08925pt x 280.04625pt>
 File: Query.PNG Graphic file (type png)
  <use Query.PNG>
-Package pdftex.def Info: Query.PNG used on input line 233.
+Package pdftex.def Info: Query.PNG used on input line 292.
 (pdftex.def)             Requested size: 259.36462pt x 210.49138pt.
- [14
+
+[17
 
  <./Query.PNG>] (./QueryGE.java
 Overfull \hbox (10.53452pt too wide) in paragraph at lines 50--51
@@ -544,7 +553,7 @@ Overfull \hbox (14.13455pt too wide) in paragraph at lines 56--57
 [][][][][][][][][][][][][][][][][][] 
  []
 
-) (./LearningApplication.java) [15] (./LearningApplication.java)
+) (./LearningApplication.java) [18] (./LearningApplication.java)
 (./LearningApplication.java
 Overfull \hbox (35.73477pt too wide) in paragraph at lines 75--76
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
@@ -556,22 +565,33 @@ Overfull \hbox (46.53488pt too wide) in paragraph at lines 78--79
 [][][][][][][][][][][][][][][][][][][][][] 
  []
 
-) (./PredictionApplication.java) [16] (./PredictionApplication.java)
-(./PredictionApplication.java) (./PredictionApplication.java) [17]
+) (./PredictionApplication.java) [19] (./PredictionApplication.java)
+(./PredictionApplication.java) (./PredictionApplication.java) [20]
 Chapter 4.
-[18
+<thetavigilance.png, id=540, 768.8725pt x 344.28625pt>
+File: thetavigilance.png Graphic file (type png)
 
-]
+<use thetavigilance.png>
+Package pdftex.def Info: thetavigilance.png used on input line 384.
+(pdftex.def)             Requested size: 475.49962pt x 212.92467pt.
+
+Overfull \hbox (43.22963pt too wide) in paragraph at lines 384--385
+ [][] 
+ []
+
+[21
+
+ <./thetavigilance.png>] [22]
 Chapter 5.
 No file main.bbl.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 333.
-[19
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 405.
+[23
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 333.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 405.
  (./main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 333.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 333.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 405.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 405.
 
 
 Package rerunfilecheck Warning: File `main.out' has changed.
@@ -579,21 +599,21 @@ Package rerunfilecheck Warning: File `main.out' has changed.
 (rerunfilecheck)                or use package `bookmark'.
 
 Package rerunfilecheck Info: Checksums for `main.out':
-(rerunfilecheck)             Before: <no file>
-(rerunfilecheck)             After:  D0CA0871DE53DC0D25F53A74E1535E12;1525.
+(rerunfilecheck)             Before: D0CA0871DE53DC0D25F53A74E1535E12;1525
+(rerunfilecheck)             After:  FBD277AAB2322A7D105B6C249F066D04;1508.
 
 LaTeX Warning: There were undefined references.
 
 
 LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 333.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 405.
  ) 
 Here is how much of TeX's memory you used:
- 8068 strings out of 493089
- 116060 string characters out of 6134841
- 259331 words of memory out of 5000000
- 11146 multiletter control sequences out of 15000+600000
+ 8214 strings out of 493089
+ 118163 string characters out of 6134841
+ 260000 words of memory out of 5000000
+ 11196 multiletter control sequences out of 15000+600000
  30480 words of font info for 59 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  36i,8n,43p,1214b,1692s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -610,10 +630,10 @@ xmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2015/texm
 f-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2015/texmf-dist/fon
 ts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/u
 rw/times/utmri8a.pfb>
-Output written on main.pdf (21 pages, 210971 bytes).
+Output written on main.pdf (25 pages, 254367 bytes).
 PDF statistics:
- 476 PDF objects out of 1000 (max. 8388607)
- 433 compressed objects within 5 object streams
- 283 named destinations out of 1000 (max. 500000)
- 11 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 672 PDF objects out of 1000 (max. 8388607)
+ 619 compressed objects within 7 object streams
+ 353 named destinations out of 1000 (max. 500000)
+ 205 words of extra memory for PDF output out of 10000 (max. 10000000)
 
