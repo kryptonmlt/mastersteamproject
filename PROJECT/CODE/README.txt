@@ -18,9 +18,9 @@ start point = example from column 2
 end point = example to column 6
 rowLimit = example first 100000 rows
 ------------------------------------------------------------
-KmeansClustering:
+KmeansClusteringN:
 contains the batch kmeans.
-It takes 2 parameters: data file and k (number of clusters).
+It takes 3 parameters: data file, k (number of clusters) and the number of dimensions.
 ------------------------------------------------------------
 ClusterVisualizer
 Takes a file with data points and another file with their associated clusters. Then visualizes them on a graph.
