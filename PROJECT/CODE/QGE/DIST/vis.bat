@@ -1,0 +1,1 @@
+java -jar ClusterVisualizer.jar AVGDATA_0.1_50000.txt dataclusters_0.1_0.1_0.05.txt

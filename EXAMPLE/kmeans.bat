@@ -1,1 +1,1 @@
-java -jar KMEANS.jar queries_0.1_200000.txt 2
+java -jar KMEANS.jar nethylene_methane.txt 50
