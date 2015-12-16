@@ -155,7 +155,7 @@ m_{k+1}\leftarrow x^{t} & if b_{i}>\rho
 \end{cases}
 \end{equation}
 
-where $m_{i}$ is the initial cluster center, $\rho$ is the vigilance value and $b_{i}$ is the  Euclidean distance between the point and its nearest centroid. 
+where $m_{i}$ is the initial cluster center, $\rho$ is the vigilance value and $b_{i}$ is the  Euclidean distance between the point and its nearest centroid \cite{Clustering}.
 
 
 \subsubsection{Implementation}
@@ -176,7 +176,7 @@ If the distance between the point and the nearest centroid is less than the vigi
 
 \subsection{Silhouette}
 \subsubsection{The Algorithm}
-Silhouette is a method which allows one to measure how similar is a data point to all the other points in its cluster. This method is used to validate the consistency and strength of a cluster. The Silhouette Coefficient of a data point, $s(i)$ can be determined using the following formula:
+Silhouette \cite{Rousseeuw} is an evaluation  method which allows one to measure how similar is a data point to all the other points in its cluster. This method is used to validate the consistency and strength of a cluster. The Silhouette Coefficient of a data point, $s(i)$ can be determined using the following formula:
 \begin{equation}
 s(i) = \frac{b(i) - a(i)}{max\left\{a(i), b(i)\right\}}
 \end{equation}
