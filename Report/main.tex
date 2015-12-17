@@ -448,7 +448,7 @@ The number of radius queries generated and executed over the original data space
  \label{table5}
 \resizebox{15.3cm}{!}{
 \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|}
-		\hline \diagbox {$ \theta $ }{$ v. $}   & 0.05   & 0.1    & 0.2    & 0.3    & 0.4    & 0.5    & 0.6    & 0.7     & 0.8    & 0.9    & 1.0   \\ 
+		\hline \diagbox {$ \theta $ }{$ vig. $}   & 0.05   & 0.1    & 0.2    & 0.3    & 0.4    & 0.5    & 0.6    & 0.7     & 0.8    & 0.9    & 1.0   \\ 
 		\hline 	0.05 & 0.8448 & 0.6508 & 0.4719 & 0.3514 & 0.3125 & 0.3458 & 0.3752 & 0.3117  & 0.3271 & 0.3083 & 0.3083 \\
 		\hline 	0.1  & 0.4757 & 0.4226 & 0.4038 & 0.3974 & 0.3981 & 0.4032 & 0.4511 & 0.4177  & 0.4013 & 0.4145 & 0.2752 \\
 		\hline 	0.2  & 0.3697 & 0.3993 & 0.4621 & 0.4381 & 0.4152 & 0.3899 & 0.4117 & 0.3749  & 0.2501 & 0.2481 & 0.4076 \\
@@ -461,6 +461,7 @@ The number of radius queries generated and executed over the original data space
 }
 \end{center}
 
+As one can see as theta and vigilance were both very small a high silhouette value was achieved. We believe the reason is that with a small theta most queries will not return a result, thus, ending up with very few data points. The larger the number of points the higher the number of points that can end up in the wrong cluster. One can also take notice that when theta was small and vigilance increased silhouette also decreased. When vigilance increases the cluster sizes increase also since they cover more area thus, include more data points in the clusters increasing the chance that these data points are wrongly clustered. As theta increases we start losing a lot of information since many data points will be averaged into one area. On the other hand even though we have a very high silhouette value when using a very small theta it still might not be the ideal scenario. This is because a very small theta results in many empty queries which will end up with a loss of detail.
 
 \section{Query Space}
 
@@ -503,7 +504,7 @@ To evaluate this the similarity between queries was checked by using kmeans and 
 The image above shows the plotted queries and the different colors show the individual clusters. The center of these clusters should be the same as the specified L - which is the user interest points. As one can see the able gives the euclidean distance between the L and cluster centroids which is very small.
 
 \section{Error}
-To properly evaluate our system we began by generating a training and evaluation set. As previously explained the training set is used to learn and then the evaluation set is used to predict results. Since this is an evaluation set the predicted results are compared with their actual results and the difference calculated. The difference is the error. To evaluate the prediction this process was repeated 5 times using a training set of size 50,000 and evaluation size of 20,000. The mean errors ranged between 0.057 and 0.05, see full details in the following table, which means around 5\% error since the data space range was between -0.5 and 0.5.
+To properly evaluate our system we began by generating a training and evaluation set. As previously explained the training set is used to learn and then the evaluation set is used to predict results. Since this is an evaluation set the predicted results are compared with their actual results and the difference calculated. The difference is the error. To evaluate the prediction this process was repeated 5 times using a training set of size 50,000 and evaluation size of 20,000. The mean errors ranged from 0.057 and 0.05, see full details in the following table, which means around 5\% error since the data space range was between -0.5 and 0.5.
 
 \begin{center}
 \captionof{table}{Error evaluation}
